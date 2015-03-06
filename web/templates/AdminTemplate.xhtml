@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -14,7 +16,51 @@
     <h:body>
 
         <div id="top" class="top">
-            <ui:insert name="top">Top</ui:insert>
+            <ui:insert name="top">
+                <h:form>
+                    <p:menubar>
+                        <p:submenu  label="Account Management" icon="ui-icon-person">
+                            <p:menuitem value="Members Management" icon="ui-icon-person" url="#"/>   
+                            <p:menuitem value="Cancel Admin Account" icon="ui-icon-person" url="#"/>
+                            <p:menuitem value="Create New Admin Account" icon="ui-icon-person" url="#"/> 
+                            <p:menuitem value="Reactivate Admin Account" icon="ui-icon-person" url="#"/> 
+                        </p:submenu>
+                        <p:submenu label="Product Management" icon="ui-icon-person">
+                            <p:menuitem value="Category Management" icon="ui-icon-person" url="#"/>
+                            <p:menuitem value="SKU Management" icon="ui-icon-person" url="#"/>    
+                        </p:submenu>
+                        <p:submenu label="Customer Support" icon="ui-icon-person">
+                            <p:menuitem value="Process Enquiry" icon="ui-icon-person" url="#"/>    
+                        </p:submenu>
+                        <p:submenu label="Report Management" icon="ui-icon-person">
+                            <p:menuitem value="Sales Report" icon="ui-icon-person" url="#"/>    
+                            <p:menuitem value="Profit Report" icon="ui-icon-person" url="#"/>
+                            <p:menuitem value="GA Report" icon="ui-icon-person" url="#"/> 
+                        </p:submenu>
+                        <f:facet name="options">
+                            <p:button value="Home" icon="ui-icon-home" outcome="/faces/AdminPortal/AdminHomePage.xhtml" />
+                            <p:menuButton value="#{commonInfraMB.outAdmin.firstName}'s Settings" >
+                                <p:menuitem value="View Profile" icon="ui-icon-person" url="#"/>
+                                <p:menuitem value="Update Profile" icon="ui-icon-person" url="#"/>  
+                                <p:menuitem value="Change Password" icon="ui-icon-gear" url="#"/>
+                                <p:separator />  
+                                <p:menuitem value="Logout" icon="ui-icon-power" action="#{commonInfraMB.adminLogout(actionEvent)}" onclick="if (!confirm('Are you sure you want to log out?'))
+                                            return false;"/>
+                                <p:separator />   
+                            </p:menuButton>
+                        </f:facet>
+                    </p:menubar>
+                </h:form>
+                <p:idleMonitor timeout="3600000" onidle="PF('dlg').show()" />
+                <p:dialog header="Idled for 1 hour" modal="true" widgetVar="dlg" resizable="false" closable="false">  
+                    <h:form id="forceLogOut">  
+                        <h:outputText value="You have been logged out." style="text-align: center; margin-bottom: 10px"/>
+                        <center>
+                            <p:commandButton id="submitButton" value="Ok" oncomplete="PF('dlg').hide();" actionListener="#{commonInfraMB.adminLogout(actionEvent)}"/>
+                        </center>  
+                    </h:form>  
+                </p:dialog>
+            </ui:insert>
         </div>
 
         <div id="content" class="center_content">
