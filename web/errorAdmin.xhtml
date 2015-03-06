@@ -3,10 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>WineXpress Admin LogIn</title>
+        <title>Error Page</title>
         <style type="text/css">
             body {
                 padding-top: 40px;
@@ -36,23 +35,18 @@
         </style>
     </h:head>
     <h:body>
-        <h1 style="text-align:center" >Welcome to WineXpress Admin Portal</h1>
+        <p:growl id="growl" life="3000" />
         <h:form id="formLogin" class="form-signin">
-            <p:growl id="growl" autoUpdate="true" life="3000" />
-            <p:panel id="pnl" header="Admin Login" style="margin-bottom:10px; text-align:center;" >  
-                <h:panelGrid columns="2" style="margin: auto">  
-                    <h:outputLabel for="username" value="Email Address : " />  
-                    <p:inputText id="username" value="#{commonInfraMB.emailAdd}" required="true" label="Username" />
-
-
-                    <h:outputLabel for="password" value="Password : " />  
-                    <p:password id="password" value="#{commonInfraMB.password}" required="true" label="Password" />    
-                </h:panelGrid>
-                <h:commandButton id="loginBtn" value="Login" action="#{commonInfraMB.logInAdmin(actionEvent)}" style="" />  
-            </p:panel>
-            <h:panelGrid columns="1" style="margin: auto">
-                    <p:clock />
-            </h:panelGrid>
+            <center>
+                <b>
+                    <font color="red">
+                        <h:outputLabel for="errorMsg" value="You are not authorized to view this page." />
+                    </font>
+                </b>
+            </center>
         </h:form>
+        <center>
+            <h:outputLink value="/WXStore/faces/AdminPortal/AdminLogIn.xhtml">Return to Login Page</h:outputLink>
+        </center>
     </h:body>
 </html>

@@ -45,28 +45,50 @@ public class PopulateMB {
     public PopulateMB() {
     }
     
-    public void populate() {
-    }
-
-    private boolean createAdmin(wx.accMngmtWS.AdminUsr newAdminUsr) {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
+    public void populate() throws GeneralSecurityException, UnsupportedEncodingException {
+        //Populate Admin
         wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
-        return port.createAdmin(newAdminUsr);
-    }
-
-    private boolean registerAsMember(wx.custAccMngmtWS.Customer newCust) {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
-        return port.registerAsMember(newCust);
-    }
-
-    private boolean activateAccount(java.lang.String emailAdd) {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
-        return port.activateAccount(emailAdd);
+        wx.accMngmtWS.AdminUsr admin1 = new wx.accMngmtWS.AdminUsr();
+        admin1.setEmail("joequak@mail.com");
+        admin1.setFirstName("Joe");
+        admin1.setLastName("Quak");
+        admin1.setPassword(encrypt("password"));
+        if (port.createAdmin(admin1)) {
+            System.out.println("Populate Admin 1 success");
+        }
+        wx.accMngmtWS.AdminUsr admin2 = new wx.accMngmtWS.AdminUsr();
+        admin2.setEmail("joycetan@mail.com");
+        admin2.setFirstName("Joyce");
+        admin2.setLastName("Tan");
+        admin2.setPassword(encrypt("P@ssword"));
+        if (port.createAdmin(admin2)) {
+            System.out.println("Populate Admin 2 success");
+        }
+        
+        //Populate Customer
+        wx.custAccMngmtWS.CustAccMngmtWS port_1 = service_1.getCustAccMngmtWSPort();
+        wx.custAccMngmtWS.Customer cust1 = new wx.custAccMngmtWS.Customer();
+        cust1.setEmail("joe.zaxx89@gmail.com");
+        cust1.setFistName("Joe");
+        cust1.setLastName("ZaXx");
+        cust1.setPassword(encrypt("cust1"));
+        if (port_1.registerAsMember(cust1)) {
+            System.out.println("Populate Cust 1 Registered");
+        }
+        if (port_1.activateAccount(cust1.getEmail())) {
+            System.out.println("Populate Cust 1 Activated");
+        }
+        wx.custAccMngmtWS.Customer cust2 = new wx.custAccMngmtWS.Customer();
+        cust2.setEmail("joeboiboi@gmail.com");
+        cust2.setFistName("Boi");
+        cust2.setLastName("Boi");
+        cust2.setPassword(encrypt("cust2"));
+        if (port_1.registerAsMember(cust2)) {
+            System.out.println("Populate Cust 2 Registered");
+        }
+        if (port_1.activateAccount(cust2.getEmail())) {
+            System.out.println("Populate Cust 2 Activated");
+        }
     }
     
     private static String encrypt(String property) throws GeneralSecurityException, UnsupportedEncodingException {

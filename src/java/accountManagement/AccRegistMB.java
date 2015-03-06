@@ -7,11 +7,22 @@ package accountManagement;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.xml.ws.WebServiceRef;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+import wx.accMngmtWS.AdminAccMngmtWS_Service;
+import wx.accMngmtWS.AdminUsr;
 import wx.custAccMngmtWS.CustAccMngmtWS_Service;
 import wx.custAccMngmtWS.Customer;
 
@@ -23,10 +34,23 @@ import wx.custAccMngmtWS.Customer;
 @ViewScoped
 public class AccRegistMB {
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/WineXpressWebService-war/CustAccMngmtWS.wsdl")
-    private CustAccMngmtWS_Service service;
+    private CustAccMngmtWS_Service service_1;
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/WineXpressWebService-war/AdminAccMngmtWS.wsdl")
+    private AdminAccMngmtWS_Service service;
     
-    //Input variable to webservices
+    //for encryption
+    private static final char[] PASSWORD = "enfldsgbnlsngdlksdsgm".toCharArray();
+    private static final byte[] SALT = {
+        (byte) 0xde, (byte) 0x33, (byte) 0x10, (byte) 0x12,
+        (byte) 0xde, (byte) 0x33, (byte) 0x10, (byte) 0x12,};
+    
+    //Input Varaibles to Web Services;
+    //Create Admin
+    private AdminUsr toCreate;
+    private String toCreatePassword;
+    //Register Member
     private Customer toRegist;
+    private String toRegistPassword;
     private String emailToActivate;
 
     /**
@@ -34,13 +58,17 @@ public class AccRegistMB {
      */
     public AccRegistMB() {
         toRegist = new Customer();
+        toRegistPassword = "";
         emailToActivate = "";
+        toCreate = new AdminUsr();
+        toCreatePassword = "";
     }
 
+    //Register Member Methods
     public void activateAccount(ActionEvent actionEvent) throws IOException {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
-        wx.custAccMngmtWS.CustAccMngmtWS port = service.getCustAccMngmtWSPort();
+        wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
         if (port.activateAccount(this.getEmailToActivate())) {
             infoMsg("Member Activated");
             FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
@@ -50,17 +78,30 @@ public class AccRegistMB {
         }
     }
 
-    public void registerAsMember (ActionEvent actionEvent) throws IOException {
+    public void registerAsMember (ActionEvent actionEvent) throws IOException, GeneralSecurityException {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
-        wx.custAccMngmtWS.CustAccMngmtWS port = service.getCustAccMngmtWSPort();
-        port.registerAsMember(getToRegist());
+        wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
+        this.getToRegist().setPassword(encrypt(this.getToRegistPassword()));
         if (port.registerAsMember(this.getToRegist())) {
             infoMsg("Member Registered");
             FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
         } else {
             errorMsg("Member Registration Fail");
+        }
+    }
+    
+    //Create Admin Account Methods
+    public void createAdmin(ActionEvent actionEvent) throws IOException, GeneralSecurityException {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
+        this.getToCreate().setPassword(encrypt(this.getToCreatePassword()));
+        if (port.createAdmin(this.getToCreate())) {
+            infoMsg("Admin Account Created");
             FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
+        } else {
+            errorMsg("Admin Account Creation Fail");
         }
     }
     
@@ -76,6 +117,32 @@ public class AccRegistMB {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, msg);
         context.getExternalContext().getFlash().setKeepMessages(true);
+    }
+    
+    private static String encrypt(String property) throws GeneralSecurityException, UnsupportedEncodingException {
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
+        SecretKey key = keyFactory.generateSecret(new PBEKeySpec(PASSWORD));
+        Cipher pbeCipher = Cipher.getInstance("PBEWithMD5AndDES");
+        pbeCipher.init(Cipher.ENCRYPT_MODE, key, new PBEParameterSpec(SALT, 20));
+        return base64Encode(pbeCipher.doFinal(property.getBytes("UTF-8")));
+    }
+
+    private static String base64Encode(byte[] bytes) {
+        // NB: This class is internal, and you probably should use another impl
+        return new BASE64Encoder().encode(bytes);
+    }
+
+    private static String decrypt(String property) throws GeneralSecurityException, IOException {
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
+        SecretKey key = keyFactory.generateSecret(new PBEKeySpec(PASSWORD));
+        Cipher pbeCipher = Cipher.getInstance("PBEWithMD5AndDES");
+        pbeCipher.init(Cipher.DECRYPT_MODE, key, new PBEParameterSpec(SALT, 20));
+        return new String(pbeCipher.doFinal(base64Decode(property)), "UTF-8");
+    }
+
+    private static byte[] base64Decode(String property) throws IOException {
+        // NB: This class is internal, and you probably should use another impl
+        return new BASE64Decoder().decodeBuffer(property);
     }
 
     /**
@@ -105,5 +172,47 @@ public class AccRegistMB {
     public void setEmailToActivate(String emailToActivate) {
         this.emailToActivate = emailToActivate;
     }
-    
+
+    /**
+     * @return the toCreate
+     */
+    public AdminUsr getToCreate() {
+        return toCreate;
+    }
+
+    /**
+     * @param toCreate the toCreate to set
+     */
+    public void setToCreate(AdminUsr toCreate) {
+        this.toCreate = toCreate;
+    }
+
+    /**
+     * @return the toCreatePassword
+     */
+    public String getToCreatePassword() {
+        return toCreatePassword;
+    }
+
+    /**
+     * @param toCreatePassword the toCreatePassword to set
+     */
+    public void setToCreatePassword(String toCreatePassword) {
+        this.toCreatePassword = toCreatePassword;
+    }
+
+    /**
+     * @return the toRegistPassword
+     */
+    public String getToRegistPassword() {
+        return toRegistPassword;
+    }
+
+    /**
+     * @param toRegistPassword the toRegistPassword to set
+     */
+    public void setToRegistPassword(String toRegistPassword) {
+        this.toRegistPassword = toRegistPassword;
+    }
+   
 }
