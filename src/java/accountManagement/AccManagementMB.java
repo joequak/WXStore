@@ -212,9 +212,9 @@ public class AccManagementMB {
             if (this.getNewPW().equals(this.getOldPW())) {
                 errorMsg("Password Change Failed - New password cannot be the same as Old password.");
             } else {
-                if (port.changePwMember(this.getLogInAdmin(), encrypt(this.getOldPW()), encrypt(this.getNewPW()))) {
+                if (port.changePwMember(this.getLogInCust(), encrypt(this.getOldPW()), encrypt(this.getNewPW()))) {
                     infoMsg("Password Change Success");
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("../AdminPortal/AdminViewProfile.xhtml");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("../WineXpressStore/MemberViewProfile.xhtml");
                 } else {
                     errorMsg("Password Change Failed - Incorrect Old Password Provided.");
                 }
@@ -230,12 +230,12 @@ public class AccManagementMB {
         wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
         if (port.editParticularsMember(this.getLogInCust(), this.getNewCust())) {
             infoMsg("Changes Saved");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../AdminPortal/AdminViewProfile.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../WineXpressStore/MemberViewProfile.xhtml");
         } else {
             errorMsg("Changes Failed");
         }
     }
-
+    //may be deleted
     public void viewPurchaseHistoryMember(ActionEvent actionEvent) throws IOException {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.

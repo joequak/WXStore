@@ -65,16 +65,16 @@ public class AccRegistMB {
     }
 
     //Register Member Methods
-    public void activateAccount(ActionEvent actionEvent) throws IOException {
+    public void activateAccount() throws IOException {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
         if (port.activateAccount(this.getEmailToActivate())) {
             infoMsg("Member Activated");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../WineXpressStore/VisitorActivateAccountSuccess.xhtml");
         } else {
             errorMsg("Member Activation Fail");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../WineXpressStore/VisitorActivateAccountFail.xhtml");
         }
     }
 
@@ -85,7 +85,7 @@ public class AccRegistMB {
         this.getToRegist().setPassword(encrypt(this.getToRegistPassword()));
         if (port.registerAsMember(this.getToRegist())) {
             infoMsg("Member Registered");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../WineXpressStore/VisitorRegisterSuccess.xhtml");
         } else {
             errorMsg("Member Registration Fail");
         }

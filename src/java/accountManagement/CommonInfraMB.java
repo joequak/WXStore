@@ -85,7 +85,7 @@ public class CommonInfraMB {
             errorMsg("Login Failed");
         } else {
             infoMsg("Login Success");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../WineXpressStore/homePage.xhtml");
         }
     }
 

@@ -19,31 +19,17 @@
                 <h:form>
                     <p:menubar>
                         <p:submenu  label="Account Management" icon="ui-icon-person">
-                            <p:menuitem value="Members Management" icon="ui-icon-person" url="#"/>   
-                            <p:menuitem value="Cancel Admin Account" icon="ui-icon-person" url="#"/>
-                            <p:menuitem value="Create New Admin Account" icon="ui-icon-person" url="#"/> 
-                            <p:menuitem value="Reactivate Admin Account" icon="ui-icon-person" url="#"/> 
-                        </p:submenu>
-                        <p:submenu label="Product Management" icon="ui-icon-person">
-                            <p:menuitem value="Category Management" icon="ui-icon-person" url="#"/>
-                            <p:menuitem value="SKU Management" icon="ui-icon-person" url="#"/>    
-                        </p:submenu>
-                        <p:submenu label="Customer Support" icon="ui-icon-person">
-                            <p:menuitem value="Process Enquiry" icon="ui-icon-person" url="#"/>    
-                        </p:submenu>
-                        <p:submenu label="Report Management" icon="ui-icon-person">
-                            <p:menuitem value="Sales Report" icon="ui-icon-person" url="#"/>    
-                            <p:menuitem value="Profit Report" icon="ui-icon-person" url="#"/>
-                            <p:menuitem value="GA Report" icon="ui-icon-person" url="#"/> 
+                            <p:menuitem value="Members Management" icon="ui-icon-person" url="../AdminPortal/AdminManageMember.xhtml"/>   
+                            <p:menuitem value="Create New Admin Account" icon="ui-icon-person" url="../AdminPortal/AdminCreateAdmin.xhtml"/> 
+                            <p:menuitem value="Reactivate Admin Account" icon="ui-icon-person" url="../AdminPortal/AdminReactivateAdmin.xhtml"/> 
                         </p:submenu>
                         <f:facet name="options">
-                            <p:button value="Home" icon="ui-icon-home" outcome="/faces/AdminPortal/AdminHomePage.xhtml" />
-                            <p:menuButton value="#{accMngmtMB.outCust.fistName}'s Settings" >
-                                <p:menuitem value="View Profile" icon="ui-icon-person" url="#"/>
-                                <p:menuitem value="Update Profile" icon="ui-icon-person" url="#"/>  
-                                <p:menuitem value="Change Password" icon="ui-icon-gear" url="#"/>
+                            <p:button value="LogIn" icon="ui-icon-home" outcome="/WineXpressStore/MemberLogIn.xhtml" rendered="#{commonInfraMB.logInCust == -1}"/>
+                            <p:menuButton value="#{accMngmtMB.outCust.fistName}'s Settings" rendered="#{commonInfraMB.logInCust != -1}" >
+                                <p:menuitem value="View Account" icon="ui-icon-person" url="../WineXpressStore/MemberViewProfile.xhtml"/>
+                                <p:menuitem value="View Purchase History" icon="ui-icon-person" url="../WineXpressStore/MemberViewPurchaseHistory.xhtml"/>
                                 <p:separator />  
-                                <p:menuitem value="Logout" icon="ui-icon-power" action="#{commonInfraMB.adminLogout(actionEvent)}" onclick="if (!confirm('Are you sure you want to log out?'))
+                                <p:menuitem value="Logout" icon="ui-icon-power" action="#{commonInfraMB.custLogout(actionEvent)}" onclick="if (!confirm('Are you sure you want to log out?'))
                                             return false;"/>
                                 <p:separator />   
                             </p:menuButton>
