@@ -99,7 +99,7 @@ public class AccRegistMB {
         this.getToCreate().setPassword(encrypt(this.getToCreatePassword()));
         if (port.createAdmin(this.getToCreate())) {
             infoMsg("Admin Account Created");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../AdminPortal/AdminHomePage.xhtml");
         } else {
             errorMsg("Admin Account Creation Fail");
         }

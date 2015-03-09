@@ -51,7 +51,7 @@
 <xs:element name="password" type="xs:string" minOccurs="0"/>
 <xs:element name="rateCollection" type="tns:rate" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 <xs:element name="shipToAddressCollection" type="tns:shipToAddress" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="status" type="xs:boolean" minOccurs="0"/>
+<xs:element name="status" type="xs:boolean"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -87,7 +87,7 @@
 <xs:element name="id" type="xs:long" minOccurs="0"/>
 <xs:element name="lastName" type="xs:string" minOccurs="0"/>
 <xs:element name="password" type="xs:string" minOccurs="0"/>
-<xs:element name="status" type="xs:boolean" minOccurs="0"/>
+<xs:element name="status" type="xs:boolean"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -117,7 +117,7 @@
 <xs:element name="id" type="xs:long" minOccurs="0"/>
 <xs:element name="orderDetail" type="tns:orderDetail" minOccurs="0"/>
 <xs:element name="product" type="tns:product" minOccurs="0"/>
-<xs:element name="quantity" type="xs:int" minOccurs="0"/>
+<xs:element name="quantity" type="xs:int"/>
 <xs:element name="subtotal" type="xs:double"/>
 </xs:sequence>
 </xs:complexType>
@@ -128,15 +128,15 @@
 <xs:element name="contactNumber" type="xs:string" minOccurs="0"/>
 <xs:element name="currency" type="xs:string" minOccurs="0"/>
 <xs:element name="customer" type="tns:customer" minOccurs="0"/>
-<xs:element name="discountedPrice" type="xs:double" minOccurs="0"/>
+<xs:element name="discountedPrice" type="xs:double"/>
 <xs:element name="id" type="xs:long" minOccurs="0"/>
 <xs:element name="ordDate" type="tns:timestamp" minOccurs="0"/>
 <xs:element name="orderItemCollection" type="tns:orderItem" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 <xs:element name="payment" type="tns:payment" minOccurs="0"/>
-<xs:element name="priceBeforeDisc" type="xs:double" minOccurs="0"/>
-<xs:element name="shippingFee" type="xs:double" minOccurs="0"/>
+<xs:element name="priceBeforeDisc" type="xs:double"/>
+<xs:element name="shippingFee" type="xs:double"/>
 <xs:element name="status" type="xs:string" minOccurs="0"/>
-<xs:element name="totalPrice" type="xs:double" minOccurs="0"/>
+<xs:element name="totalPrice" type="xs:double"/>
 <xs:element name="dAddress1" type="xs:string" minOccurs="0"/>
 <xs:element name="dAddress2" type="xs:string" minOccurs="0"/>
 <xs:element name="dCity" type="xs:string" minOccurs="0"/>
@@ -177,7 +177,7 @@
 <xs:element name="customer" type="tns:customer" minOccurs="0"/>
 <xs:element name="id" type="xs:long" minOccurs="0"/>
 <xs:element name="product" type="tns:product" minOccurs="0"/>
-<xs:element name="rate" type="xs:double" minOccurs="0"/>
+<xs:element name="rate" type="xs:double"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -253,6 +253,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="viewAccInfoMember">
+<xs:sequence>
+<xs:element name="custID" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="viewAccInfoMemberResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:customer" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="changePwMember">
 <xs:sequence>
 <xs:element name="custID" type="xs:long"/>
@@ -264,18 +276,6 @@
 <xs:complexType name="changePwMemberResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="viewAccInfoMember">
-<xs:sequence>
-<xs:element name="custID" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="viewAccInfoMemberResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:customer" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

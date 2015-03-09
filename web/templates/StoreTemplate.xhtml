@@ -14,8 +14,6 @@
     </h:head>
 
     <h:body>
-         #{popMB.populate()}
-        #{commonInfraMB.checkAdminLogin()}
         <div id="top">
             <ui:insert name="top">
                 <h:form>
@@ -40,7 +38,7 @@
                         </p:submenu>
                         <f:facet name="options">
                             <p:button value="Home" icon="ui-icon-home" outcome="/faces/AdminPortal/AdminHomePage.xhtml" />
-                            <p:menuButton value="#{commonInfraMB.outAdmin.firstName}'s Settings" >
+                            <p:menuButton value="#{accMngmtMB.outCust.fistName}'s Settings" >
                                 <p:menuitem value="View Profile" icon="ui-icon-person" url="#"/>
                                 <p:menuitem value="Update Profile" icon="ui-icon-person" url="#"/>  
                                 <p:menuitem value="Change Password" icon="ui-icon-gear" url="#"/>

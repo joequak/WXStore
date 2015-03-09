@@ -4,6 +4,18 @@
 <xsd:import namespace="http://accountManagement.wx.com/" schemaLocation="http://localhost:8080/WineXpressWebService-war/AdminAccMngmtWS?xsd=1"/>
 </xsd:schema>
 </types>
+<message name="editParticularsAdmin">
+<part name="parameters" element="tns:editParticularsAdmin"/>
+</message>
+<message name="editParticularsAdminResponse">
+<part name="parameters" element="tns:editParticularsAdminResponse"/>
+</message>
+<message name="viewPurchaseHistoryAdmin">
+<part name="parameters" element="tns:viewPurchaseHistoryAdmin"/>
+</message>
+<message name="viewPurchaseHistoryAdminResponse">
+<part name="parameters" element="tns:viewPurchaseHistoryAdminResponse"/>
+</message>
 <message name="logInAdmin">
 <part name="parameters" element="tns:logInAdmin"/>
 </message>
@@ -58,19 +70,15 @@
 <message name="reActivateAdminResponse">
 <part name="parameters" element="tns:reActivateAdminResponse"/>
 </message>
-<message name="editParticularsAdmin">
-<part name="parameters" element="tns:editParticularsAdmin"/>
-</message>
-<message name="editParticularsAdminResponse">
-<part name="parameters" element="tns:editParticularsAdminResponse"/>
-</message>
-<message name="viewPurchaseHistoryAdmin">
-<part name="parameters" element="tns:viewPurchaseHistoryAdmin"/>
-</message>
-<message name="viewPurchaseHistoryAdminResponse">
-<part name="parameters" element="tns:viewPurchaseHistoryAdminResponse"/>
-</message>
 <portType name="AdminAccMngmtWS">
+<operation name="editParticularsAdmin">
+<input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/editParticularsAdminRequest" message="tns:editParticularsAdmin"/>
+<output wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/editParticularsAdminResponse" message="tns:editParticularsAdminResponse"/>
+</operation>
+<operation name="viewPurchaseHistoryAdmin">
+<input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/viewPurchaseHistoryAdminRequest" message="tns:viewPurchaseHistoryAdmin"/>
+<output wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/viewPurchaseHistoryAdminResponse" message="tns:viewPurchaseHistoryAdminResponse"/>
+</operation>
 <operation name="logInAdmin">
 <input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/logInAdminRequest" message="tns:logInAdmin"/>
 <output wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/logInAdminResponse" message="tns:logInAdminResponse"/>
@@ -107,17 +115,27 @@
 <input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/reActivateAdminRequest" message="tns:reActivateAdmin"/>
 <output wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/reActivateAdminResponse" message="tns:reActivateAdminResponse"/>
 </operation>
-<operation name="editParticularsAdmin">
-<input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/editParticularsAdminRequest" message="tns:editParticularsAdmin"/>
-<output wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/editParticularsAdminResponse" message="tns:editParticularsAdminResponse"/>
-</operation>
-<operation name="viewPurchaseHistoryAdmin">
-<input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/viewPurchaseHistoryAdminRequest" message="tns:viewPurchaseHistoryAdmin"/>
-<output wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/viewPurchaseHistoryAdminResponse" message="tns:viewPurchaseHistoryAdminResponse"/>
-</operation>
 </portType>
 <binding name="AdminAccMngmtWSPortBinding" type="tns:AdminAccMngmtWS">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="editParticularsAdmin">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="viewPurchaseHistoryAdmin">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="logInAdmin">
 <soap:operation soapAction=""/>
 <input>
@@ -191,24 +209,6 @@
 </output>
 </operation>
 <operation name="reActivateAdmin">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="editParticularsAdmin">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="viewPurchaseHistoryAdmin">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

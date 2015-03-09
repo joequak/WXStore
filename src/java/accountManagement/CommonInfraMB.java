@@ -22,9 +22,7 @@ import javax.xml.ws.WebServiceRef;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 import wx.accMngmtWS.AdminAccMngmtWS_Service;
-import wx.accMngmtWS.AdminUsr;
 import wx.custAccMngmtWS.CustAccMngmtWS_Service;
-import wx.custAccMngmtWS.Customer;
 
 /**
  *
@@ -51,13 +49,7 @@ public class CommonInfraMB {
     //Input Varaibles to Web Services
     //Login
     private String emailAdd;
-    private String password;
-    
-    //Output variables from Web Services
-    //view particulars
-    private Customer outCust;
-    private AdminUsr outAdmin;  
-    
+    private String password;    
 
     /**
      * Creates a new instance of CommonInfraMB
@@ -78,7 +70,6 @@ public class CommonInfraMB {
         if (this.getLogInAdmin() == -1) {
             errorMsg("Login Failed");
         } else {
-            this.setOutAdmin(port.viewAccInfoAdmin(this.getLogInAdmin()));
             infoMsg("Login Success");
             FacesContext.getCurrentInstance().getExternalContext().redirect("../AdminPortal/AdminHomePage.xhtml");
         }
@@ -228,31 +219,4 @@ public class CommonInfraMB {
         this.password = password;
     }
 
-    /**
-     * @return the outCust
-     */
-    public Customer getOutCust() {
-        return outCust;
-    }
-
-    /**
-     * @param outCust the outCust to set
-     */
-    public void setOutCust(Customer outCust) {
-        this.outCust = outCust;
-    }
-
-    /**
-     * @return the outAdmin
-     */
-    public AdminUsr getOutAdmin() {
-        return outAdmin;
-    }
-
-    /**
-     * @param outAdmin the outAdmin to set
-     */
-    public void setOutAdmin(AdminUsr outAdmin) {
-        this.outAdmin = outAdmin;
-    }
 }

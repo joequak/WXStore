@@ -53,11 +53,6 @@ public class AccManagementMB {
     private long logInAdmin;
     @ManagedProperty(value="#{commonInfraMB.logInCust}")
     private long logInCust;
-    @ManagedProperty(value="#{commonInfraMB.outCust}")
-    private Customer outCust;
-    @ManagedProperty(value="#{commonInfraMB.outAdmin}")
-    private AdminUsr outAdmin;
-    
     
     //Input Varaibles to Web Services
     //Edit Particulars
@@ -66,15 +61,22 @@ public class AccManagementMB {
     //Change PW
     private String oldPW;
     private String newPW;
-    //Selected Customer
-    private Customer selectedCustomer;
+    private String newPWreconfirm;
     //To reactivate
     private String custToReact;
     private String adminToReact;
+    //To cancel account
+    private String toCancel;
+    //Selected Customer
+    private wx.accMngmtWS.Customer selectedCustomer;
     
-    //Output variables from Web Services
-    //Get all Customer
+    //Output variables from Web Services for UI
+    //View Profile
+    private Customer outCust;
+    private AdminUsr outAdmin;
+    //Admin Member List Management 
     private List<wx.accMngmtWS.Customer> custList;
+    private List<wx.accMngmtWS.Customer> filteredCustList;
     //Get Purchase History
     private List<OrderDetail> custPurchaseHistory;
     private List<wx.accMngmtWS.OrderDetail> adminViewPurchaseHistory;
@@ -89,31 +91,70 @@ public class AccManagementMB {
         newPW = "";
         custToReact = "";
         adminToReact = "";
+        selectedCustomer = new wx.accMngmtWS.Customer();
     }
     
     //WebService methods
-    //Admin manage accounts methods
+    //Admin manage admin member methods
     public void blockCust(ActionEvent actionEvent) throws IOException {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
-        if (port.blockCust(this.getLogInAdmin(), this.getSelectedCustomer().getId())) {
-            infoMsg("Customer Blocked");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
-        } else {
-            errorMsg("Member Activation Fail");
+        if (this.getSelectedCustomer() != null) {
+            if (port.blockCust(this.getLogInAdmin(), this.getSelectedCustomer().getId())) {
+                infoMsg("Member Blocked");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../AdminPortal/AdminManageMember.xhtml");
+            } else {
+                errorMsg("Member Block Fail");
+            }
         }
     }
     
+    public void activateAccount(ActionEvent actionEvent) throws IOException {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
+        if (this.getSelectedCustomer() != null) {
+            if (port.activateAccount(this.getSelectedCustomer().getEmail())) {
+                infoMsg("Member Account Reactivated");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../AdminPortal/AdminManageMember.xhtml");
+            } else {
+                errorMsg("Member Account Reactivation Failed");
+            }
+        }
+    }
+    
+    //to delete
+    public void getAllCust(ActionEvent actionEvent) throws IOException {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
+        this.setCustList(port.getAllCust(this.getLogInAdmin()));
+    }
+    //may be deleted
+    public void viewPurchaseHistoryAdmin(ActionEvent actionEvent) throws IOException {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
+        this.setAdminViewPurchaseHistory(port.viewPurchaseHistoryAdmin(this.getLogInAdmin(), this.getSelectedCustomer().getId()));
+    }
+    
+    //Admin manage admin accounts methods
     public void cancelAccount(ActionEvent actionEvent) throws IOException {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
-        if (port.cancelAccount(this.getLogInAdmin())) {
-            infoMsg("Account Cancelled");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
+        System.out.println("Calling webservice cancel account 1");
+        if (this.getToCancel().equals(this.getOutAdmin().getEmail())) {
+            System.out.println("Calling webservice cancel account 2");
+            if (port.cancelAccount(this.getLogInAdmin())) {
+                infoMsg("Account Cancelled");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../AdminPortal/AdminLogIn.xhtml");
+            } else {
+                errorMsg("Account Cancellation Failed");
+            }
         } else {
-            errorMsg("Account Cancellaion Failed");
+            errorMsg("Account Cancellation Failed: Input Email is Incorrect.");
         }
     }
         
@@ -121,57 +162,32 @@ public class AccManagementMB {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
+        System.out.println("admin to react is " + this.getAdminToReact());
         if (port.reActivateAdmin(this.getAdminToReact())) {
             infoMsg("Admin Account Reactivated");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
         } else {
             errorMsg("Admin Account Reactivation Failed");
         }
-    }
+    } 
 
-    public void activateAccount(ActionEvent actionEvent) throws IOException {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
-        if (port.activateAccount(this.getCustToReact())) {
-            infoMsg("Member Account Reactivated");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
-        } else {
-            errorMsg("Member Account Reactivation Failed");
-        }
-    }
-    
-    public void getAllCust(ActionEvent actionEvent) throws IOException {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
-        this.setCustList(port.getAllCust(this.getLogInAdmin()));
-    }
-
-    public void viewAccInfoAdmin(ActionEvent actionEvent) throws IOException {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
-        this.setOutAdmin(port.viewAccInfoAdmin(this.getLogInAdmin()));
-    }
-
-    public void viewPurchaseHistoryAdmin(ActionEvent actionEvent) throws IOException {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
-        this.setAdminViewPurchaseHistory(port.viewPurchaseHistoryAdmin(this.getLogInAdmin(), this.getSelectedCustomer().getId()));
-    }
-
-    //Admin Self account methods
+    //Admin Self account methods  
     public void changePwAdmin(ActionEvent actionEvent) throws IOException, GeneralSecurityException {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
-        if (port.changePwAdmin(this.getLogInAdmin(), encrypt(this.getOldPW()), encrypt(this.getNewPW()))) {
-            infoMsg("Password Change Success");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
+        if (this.getNewPW().equals(this.getNewPWreconfirm())) {
+            if (this.getNewPW().equals(this.getOldPW())) {
+                errorMsg("Password Change Failed - New password cannot be the same as Old password.");
+            } else {
+                if (port.changePwAdmin(this.getLogInAdmin(), encrypt(this.getOldPW()), encrypt(this.getNewPW()))) {
+                    infoMsg("Password Change Success");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("../AdminPortal/AdminViewProfile.xhtml");
+                } else {
+                    errorMsg("Password Change Failed - Incorrect Old Password Provided.");
+                }
+            }
         } else {
-            errorMsg("Password Change Failed");
+            errorMsg("Reconfirm Password does not tally with New Password.");
         }
     }
 
@@ -180,10 +196,10 @@ public class AccManagementMB {
         // If the calling of port operations may lead to race condition some synchronization is required.
         wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
         if (port.editParticularsAdmin(this.getLogInAdmin(), this.getNewAdminUsr())) {
-            infoMsg("Password Change Success");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
+            infoMsg("Changes Saved");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../AdminPortal/AdminViewProfile.xhtml");
         } else {
-            errorMsg("Password Change Failed");
+            errorMsg("Changes Failed");
         }
     }
     
@@ -192,11 +208,19 @@ public class AccManagementMB {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
-        if (port.changePwMember(this.getLogInCust(), encrypt(this.getOldPW()), encrypt(this.getNewPW()))) {
-            infoMsg("Password Change Success");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
+        if (this.getNewPW().equals(this.getNewPWreconfirm())) {
+            if (this.getNewPW().equals(this.getOldPW())) {
+                errorMsg("Password Change Failed - New password cannot be the same as Old password.");
+            } else {
+                if (port.changePwMember(this.getLogInAdmin(), encrypt(this.getOldPW()), encrypt(this.getNewPW()))) {
+                    infoMsg("Password Change Success");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("../AdminPortal/AdminViewProfile.xhtml");
+                } else {
+                    errorMsg("Password Change Failed - Incorrect Old Password Provided.");
+                }
+            }
         } else {
-            errorMsg("Password Change Failed");
+            errorMsg("Reconfirm Password does not tally with New Password.");
         }
     }
 
@@ -205,18 +229,11 @@ public class AccManagementMB {
         // If the calling of port operations may lead to race condition some synchronization is required.
         wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
         if (port.editParticularsMember(this.getLogInCust(), this.getNewCust())) {
-            infoMsg("Password Change Success");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
+            infoMsg("Changes Saved");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../AdminPortal/AdminViewProfile.xhtml");
         } else {
-            errorMsg("Password Change Failed");
+            errorMsg("Changes Failed");
         }
-    }
-
-    public void viewAccInfoMember(ActionEvent actionEvent) throws IOException {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
-        this.setOutCust(port.viewAccInfoMember(this.getLogInCust()));
     }
 
     public void viewPurchaseHistoryMember(ActionEvent actionEvent) throws IOException {
@@ -226,6 +243,8 @@ public class AccManagementMB {
         this.setCustPurchaseHistory(port.viewPurchaseHistoryMember(this.getLogInCust()));
     }
     
+    //Support MB methods
+    //Feedback Message methods
     public void errorMsg(String message) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, "");
         FacesContext context = FacesContext.getCurrentInstance();
@@ -240,6 +259,7 @@ public class AccManagementMB {
         context.getExternalContext().getFlash().setKeepMessages(true);
     }
     
+    //encryption Methods
     private static String encrypt(String property) throws GeneralSecurityException, UnsupportedEncodingException {
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
         SecretKey key = keyFactory.generateSecret(new PBEKeySpec(PASSWORD));
@@ -298,6 +318,10 @@ public class AccManagementMB {
      * @return the outCust
      */
     public Customer getOutCust() {
+        if (this.getLogInCust()!= -1) {
+            wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
+            outCust = port.viewAccInfoMember(this.getLogInCust());
+        }
         return outCust;
     }
 
@@ -312,6 +336,10 @@ public class AccManagementMB {
      * @return the outAdmin
      */
     public AdminUsr getOutAdmin() {
+        if (this.getLogInAdmin() != -1) {
+            wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
+            outAdmin = port.viewAccInfoAdmin(this.getLogInAdmin());
+        }
         return outAdmin;
     }
 
@@ -379,23 +407,11 @@ public class AccManagementMB {
     }
 
     /**
-     * @return the selectedCustomer
-     */
-    public Customer getSelectedCustomer() {
-        return selectedCustomer;
-    }
-
-    /**
-     * @param selectedCustomer the selectedCustomer to set
-     */
-    public void setSelectedCustomer(Customer selectedCustomer) {
-        this.selectedCustomer = selectedCustomer;
-    }
-
-    /**
      * @return the custList
      */
     public List<wx.accMngmtWS.Customer> getCustList() {
+        wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
+        custList = port.getAllCust(this.getLogInAdmin());
         return custList;
     }
 
@@ -460,6 +476,62 @@ public class AccManagementMB {
      */
     public void setAdminToReact(String adminToReact) {
         this.adminToReact = adminToReact;
+    }
+
+    /**
+     * @return the toCancel
+     */
+    public String getToCancel() {
+        return toCancel;
+    }
+
+    /**
+     * @param toCancel the toCancel to set
+     */
+    public void setToCancel(String toCancel) {
+        this.toCancel = toCancel;
+    }
+
+    /**
+     * @return the newPWreconfirm
+     */
+    public String getNewPWreconfirm() {
+        return newPWreconfirm;
+    }
+
+    /**
+     * @param newPWreconfirm the newPWreconfirm to set
+     */
+    public void setNewPWreconfirm(String newPWreconfirm) {
+        this.newPWreconfirm = newPWreconfirm;
+    }
+
+    /**
+     * @return the filteredCustList
+     */
+    public List<wx.accMngmtWS.Customer> getFilteredCustList() {
+        return filteredCustList;
+    }
+
+    /**
+     * @param filteredCustList the filteredCustList to set
+     */
+    public void setFilteredCustList(List<wx.accMngmtWS.Customer> filteredCustList) {
+        this.filteredCustList = filteredCustList;
+    }
+
+    /**
+     * @return the selectedCustomer
+     */
+    public wx.accMngmtWS.Customer getSelectedCustomer() {
+        return selectedCustomer;
+    }
+
+    /**
+     * @param selectedCustomer the selectedCustomer to set
+     */
+    public void setSelectedCustomer(wx.accMngmtWS.Customer selectedCustomer) {
+        this.selectedCustomer = selectedCustomer;
     }
     
 }

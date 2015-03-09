@@ -4,6 +4,24 @@
 <xsd:import namespace="http://accountManagement.wx.com/" schemaLocation="http://localhost:8080/WineXpressWebService-war/CustAccMngmtWS?xsd=1"/>
 </xsd:schema>
 </types>
+<message name="viewAccInfoMember">
+<part name="parameters" element="tns:viewAccInfoMember"/>
+</message>
+<message name="viewAccInfoMemberResponse">
+<part name="parameters" element="tns:viewAccInfoMemberResponse"/>
+</message>
+<message name="editParticularsMember">
+<part name="parameters" element="tns:editParticularsMember"/>
+</message>
+<message name="editParticularsMemberResponse">
+<part name="parameters" element="tns:editParticularsMemberResponse"/>
+</message>
+<message name="viewPurchaseHistoryMember">
+<part name="parameters" element="tns:viewPurchaseHistoryMember"/>
+</message>
+<message name="viewPurchaseHistoryMemberResponse">
+<part name="parameters" element="tns:viewPurchaseHistoryMemberResponse"/>
+</message>
 <message name="registerAsMember">
 <part name="parameters" element="tns:registerAsMember"/>
 </message>
@@ -34,25 +52,19 @@
 <message name="changePwMemberResponse">
 <part name="parameters" element="tns:changePwMemberResponse"/>
 </message>
-<message name="viewAccInfoMember">
-<part name="parameters" element="tns:viewAccInfoMember"/>
-</message>
-<message name="viewAccInfoMemberResponse">
-<part name="parameters" element="tns:viewAccInfoMemberResponse"/>
-</message>
-<message name="editParticularsMember">
-<part name="parameters" element="tns:editParticularsMember"/>
-</message>
-<message name="editParticularsMemberResponse">
-<part name="parameters" element="tns:editParticularsMemberResponse"/>
-</message>
-<message name="viewPurchaseHistoryMember">
-<part name="parameters" element="tns:viewPurchaseHistoryMember"/>
-</message>
-<message name="viewPurchaseHistoryMemberResponse">
-<part name="parameters" element="tns:viewPurchaseHistoryMemberResponse"/>
-</message>
 <portType name="CustAccMngmtWS">
+<operation name="viewAccInfoMember">
+<input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/viewAccInfoMemberRequest" message="tns:viewAccInfoMember"/>
+<output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/viewAccInfoMemberResponse" message="tns:viewAccInfoMemberResponse"/>
+</operation>
+<operation name="editParticularsMember">
+<input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/editParticularsMemberRequest" message="tns:editParticularsMember"/>
+<output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/editParticularsMemberResponse" message="tns:editParticularsMemberResponse"/>
+</operation>
+<operation name="viewPurchaseHistoryMember">
+<input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/viewPurchaseHistoryMemberRequest" message="tns:viewPurchaseHistoryMember"/>
+<output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/viewPurchaseHistoryMemberResponse" message="tns:viewPurchaseHistoryMemberResponse"/>
+</operation>
 <operation name="registerAsMember">
 <input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/registerAsMemberRequest" message="tns:registerAsMember"/>
 <output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/registerAsMemberResponse" message="tns:registerAsMemberResponse"/>
@@ -73,21 +85,36 @@
 <input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/changePwMemberRequest" message="tns:changePwMember"/>
 <output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/changePwMemberResponse" message="tns:changePwMemberResponse"/>
 </operation>
-<operation name="viewAccInfoMember">
-<input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/viewAccInfoMemberRequest" message="tns:viewAccInfoMember"/>
-<output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/viewAccInfoMemberResponse" message="tns:viewAccInfoMemberResponse"/>
-</operation>
-<operation name="editParticularsMember">
-<input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/editParticularsMemberRequest" message="tns:editParticularsMember"/>
-<output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/editParticularsMemberResponse" message="tns:editParticularsMemberResponse"/>
-</operation>
-<operation name="viewPurchaseHistoryMember">
-<input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/viewPurchaseHistoryMemberRequest" message="tns:viewPurchaseHistoryMember"/>
-<output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/viewPurchaseHistoryMemberResponse" message="tns:viewPurchaseHistoryMemberResponse"/>
-</operation>
 </portType>
 <binding name="CustAccMngmtWSPortBinding" type="tns:CustAccMngmtWS">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="viewAccInfoMember">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="editParticularsMember">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="viewPurchaseHistoryMember">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="registerAsMember">
 <soap:operation soapAction=""/>
 <input>
@@ -125,33 +152,6 @@
 </output>
 </operation>
 <operation name="changePwMember">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="viewAccInfoMember">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="editParticularsMember">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="viewPurchaseHistoryMember">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
