@@ -19,7 +19,7 @@
                             <h2>Login</h2>
                             <div class="input-group form-control-spacing">
                                 <div class="input-group-addon input-addon-fixedwidth">Username</div>
-                                <h:inputText id="usernameInput" value="#{loginBean.username}" styleClass="form-control" pt:placeholder="Enter your username">
+                                <h:inputText id="usernameInput" value="#{commonInfraMB.emailAdd}" styleClass="form-control" pt:placeholder="Enter your username">
                                     <!--<f:validator validatorId="custom.emailValidator" />-->
                                 </h:inputText>
                                 <h:message styleClass="errorMsg" for="usernameInput" />
@@ -27,12 +27,12 @@
 
                             <div class="input-group form-control-spacing">
                                 <div class="input-group-addon input-addon-fixedwidth">Password</div>
-                                <h:inputSecret id="passwordInput" value="#{loginBean.password}" styleClass="form-control" pt:placeholder="Enter your password" />
+                                <h:inputSecret id="passwordInput" value="#{commonInfraMB.password}" styleClass="form-control" pt:placeholder="Enter your password" />
                             </div>
                             <h:link value="Forget your password?" outcome="/resetpassword.xhtml" />
                             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
 
-                            <p:commandButton value="Login" actionListener="#{loginBean.login}" ajax="true" />
+                            <p:commandButton value="Login" actionListener="#{commonInfraMB.logInMember(actionEvent)}" ajax="true" />
                         </h:form>
                     </div>
                 </div>
