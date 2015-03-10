@@ -4,4 +4,6 @@
     <system systemId="http://localhost:8080/WineXpressWebService-war/AdminAccMngmtWS?xsd=1" uri="wsdl/localhost_8080/WineXpressWebService-war/AdminAccMngmtWS.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/WineXpressWebService-war/CustAccMngmtWS?WSDL" uri="wsdl/localhost_8080/WineXpressWebService-war/CustAccMngmtWS.wsdl"/>
     <system systemId="http://localhost:8080/WineXpressWebService-war/CustAccMngmtWS?xsd=1" uri="wsdl/localhost_8080/WineXpressWebService-war/CustAccMngmtWS.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/WineXpressWebService-war/CustSupportWS?WSDL" uri="wsdl/localhost_8080/WineXpressWebService-war/CustSupportWS.wsdl"/>
+    <system systemId="http://localhost:8080/WineXpressWebService-war/CustSupportWS?xsd=1" uri="wsdl/localhost_8080/WineXpressWebService-war/CustSupportWS.xsd_1.xsd"/>
 </catalog>
