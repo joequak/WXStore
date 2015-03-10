@@ -1,17 +1,76 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">    
 
-    <body>   
-        <ui:composition template="./../templates/StoreTemplate.xhtml">
-            <ui:define name="content">
-                
-                content
-                omgomgomg
-            </ui:define>
+    <ui:composition template="./../templates/mainTemplate.xhtml">
+        <ui:param name="pageName" value="Home" />
 
-        </ui:composition>
+        <!-- Imports -->
+        <ui:define name="more-imports">
+            <ui:insert>
+                <link rel="stylesheet" href="${request.contextPath}/css/login.css" type="text/css" />
+            </ui:insert>
+        </ui:define>
 
-    </body>
+
+        <!-- Override body -->
+        <ui:define name="body">
+            <h:panelGroup layout="block" class="bg-img">
+                <div>
+                    <ui:insert name="login">
+                        <ui:include src="/templates/snippets/login.xhtml" />
+                    </ui:insert>
+                    <!-- LOGO -->
+                    <ui:insert name="logo">
+                        <ui:include src="/templates/snippets/logo.xhtml" />
+                    </ui:insert>
+                    <!-- Navigation Bar -->
+                    <ui:insert name="nav" >
+                        <div class="login-nav">
+                            <ui:include src="/templates/snippets/navigation.xhtml" />
+                        </div>
+                    </ui:insert>
+                    <!-- Content -->
+                    <div class="content-area">
+                        <img id="logo" src="./../images/indexPage.png"/>
+                    </div>
+
+                    <div class="footer">
+                        <ui:include src="/templates/snippets/footer.xhtml" />
+                    </div>
+                </div>
+            </h:panelGroup>
+            <script type="text/javascript">
+                PrimeFaces.validator['custom.emailValidator'] = {
+                    pattern: /\S+@\S+/,
+                    validate: function(element, value) {
+                        //use element.data() to access validation metadata, in this case there is none.
+                        if (!this.pattern.test(value)) {
+                            throw {
+                                summary: 'Validation Error',
+                                detail: value + ' is not a valid email.'
+                            }
+                        }
+                    }
+                };
+
+            </script>
+            <c:if test="${not empty param.isLocked}">
+                <c:if test="${param.isLocked == 'yes'}">
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            userLocked();
+                        });
+                    </script>
+                </c:if>
+            </c:if>
+
+        </ui:define>
+
+    </ui:composition>
+
 </html>

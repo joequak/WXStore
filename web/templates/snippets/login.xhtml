@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+    <body>
+        <ui:composition>
+            <div class="nav navbar-nav navbar-right">
+                <li><a href="#" onclick="toggleLoginModal();" >Login</a></li>
+            </div>
+            <div class="container">
+                <div id="loginModal" class="modal fade">
+                    <div class="col-md-4 login-box">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h:form>
+                            <!-- login form -->
+                            <h2>Login</h2>
+                            <div class="input-group form-control-spacing">
+                                <div class="input-group-addon input-addon-fixedwidth">Username</div>
+                                <h:inputText id="usernameInput" value="#{loginBean.username}" styleClass="form-control" pt:placeholder="Enter your username">
+                                    <!--<f:validator validatorId="custom.emailValidator" />-->
+                                </h:inputText>
+                                <h:message styleClass="errorMsg" for="usernameInput" />
+                            </div>
+
+                            <div class="input-group form-control-spacing">
+                                <div class="input-group-addon input-addon-fixedwidth">Password</div>
+                                <h:inputSecret id="passwordInput" value="#{loginBean.password}" styleClass="form-control" pt:placeholder="Enter your password" />
+                            </div>
+                            <h:link value="Forget your password?" outcome="/resetpassword.xhtml" />
+                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+
+                            <p:commandButton value="Login" actionListener="#{loginBean.login}" ajax="true" />
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                PrimeFaces.validator['custom.emailValidator'] = {
+                    pattern: /\S+@\S+/,
+                    validate: function(element, value) {
+                        //use element.data() to access validation metadata, in this case there is none.
+                        if (!this.pattern.test(value)) {
+                            throw {
+                                summary: 'Validation Error',
+                                detail: value + ' is not a valid email.'
+                            }
+                        }
+                    }
+                };
+            </script>
+            <script type="text/javascript">
+                function toggleLoginModal() {
+                    $("#loginModal").modal('show');
+                }
+
+                function userLocked() {
+                    $.notify("User Locked.", "error");
+                }
+            </script>
+            <style>
+                #loginModal>.modal-backdrop.fade.in
+                {
+                    opacity: .1; 
+                }
+            </style>
+        </ui:composition>
+    </body>
+</html>
+
