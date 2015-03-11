@@ -3,27 +3,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:p="http://primefaces.org/ui" >
-    
-    <body>
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-        <ui:composition template="./../templates/StoreTemplate.xhtml">
+    <ui:composition template="./../templates/AdminTemplate.xhtml">
+        <ui:param name="pageName" value="Admin Login" />
 
-            <ui:define name="content">
-                
-                
-            <div class="container">
-                <h:form>
-                    <!-- login form -->
-                    <h2>Member Login</h2>
-                    <div class="input-group form-control-spacing">
-                        <div class="input-group-addon input-addon-fixedwidth">Username</div>
-                        <h:inputText id="usernameInput" value="#{commonInfraMB.emailAdd}" styleClass="form-control" pt:placeholder="Enter your username">
-                            <!--<f:validator validatorId="custom.emailValidator" />-->
-                        </h:inputText>
-                        <h:message styleClass="errorMsg" for="usernameInput" />
-                    </div>
+        <ui:define name="more-imports">
+            <ui:insert>
+            </ui:insert>
+        </ui:define>
+        <ui:define name="nav" >
+
+        </ui:define>
+
+        <ui:define name="content">
+            #{popMB.populate()}
+            <br></br>
+            <h:form id="formLogin" class="form-signin">
+                <p:growl id="growl" autoUpdate="true" life="3000" />
+                <p:panel id="pnl" header="Please Login" style="margin-bottom:10px; text-align:center;" >  
+                    <h:panelGrid columns="2" style="margin: auto">  
+                        <h:outputLabel for="username" value="Email Address : " />  
+                        <p:inputText id="username" value="#{commonInfraMB.emailAdd}" required="true" label="Username" />
 
                     <div class="input-group form-control-spacing">
                         <div class="input-group-addon input-addon-fixedwidth">Password</div>
@@ -32,27 +34,18 @@
                     <h:link value="Forget your password?" outcome="/resetpassword.xhtml" />
                     <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
 
-                    <p:commandButton value="Login" actionListener="#{commonInfraMB.logInMember(actionEvent)}" ajax="true" />
+                        <h:outputLabel for="password" value="Password : " />  
+                        <p:password id="password" value="#{commonInfraMB.password}" required="true" label="Password" />    
+                    </h:panelGrid>
+                    <br></br>
+                    <h:commandButton id="loginBtn" value="Login" action="#{commonInfraMB.memberLogIn(actionEvent)}" style="" /> 
+                    <br></br>
+                    <h:commandLink id="forgetPass" value="Forget Password? Click here" action="#{commonInfraMB.memberLogIn(actionEvent)}" style="font-size:12px" />  
+                </p:panel>
+                <br></br>
+                <br></br>
+                <p:link value="Not a member yet? Register Here." outcome="/WineXpressStore/VisitorRegister.xhtml" ></p:link>
                 </h:form>
-            </div>
-
-            <script type="text/javascript">
-                PrimeFaces.validator['custom.emailValidator'] = {
-                    pattern: /\S+@\S+/,
-                    validate: function(element, value) {
-                        //use element.data() to access validation metadata, in this case there is none.
-                        if (!this.pattern.test(value)) {
-                            throw {
-                                summary: 'Validation Error',
-                                detail: value + ' is not a valid email.'
-                            }
-                        }
-                    }
-                };
-            </script>
-            </ui:define>
-
-        </ui:composition>
-
-    </body>
+        </ui:define>
+    </ui:composition>
 </html>

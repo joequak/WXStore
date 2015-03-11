@@ -4,69 +4,23 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <body>
         <ui:composition>
-            <div class="nav navbar-nav navbar-right">
-                <li><a href="#" onclick="toggleLoginModal();" >Login</a></li>
-            </div>
-            <div class="container">
-                <div id="loginModal" class="modal fade">
-                    <div class="col-md-4 login-box">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h:form>
-                            <!-- login form -->
-                            <h2>Login</h2>
-                            <div class="input-group form-control-spacing">
-                                <div class="input-group-addon input-addon-fixedwidth">Username</div>
-                                <h:inputText id="usernameInput" value="#{commonInfraMB.emailAdd}" styleClass="form-control" pt:placeholder="Enter your username">
-                                    <!--<f:validator validatorId="custom.emailValidator" />-->
-                                </h:inputText>
-                                <h:message styleClass="errorMsg" for="usernameInput" />
-                            </div>
+            <h:form style="text-align: right">
+                    <c:if test="#{commonInfraMB.logInCust==-1}">
 
-                            <div class="input-group form-control-spacing">
-                                <div class="input-group-addon input-addon-fixedwidth">Password</div>
-                                <h:inputSecret id="passwordInput" value="#{commonInfraMB.password}" styleClass="form-control" pt:placeholder="Enter your password" />
-                            </div>
-                            <h:link value="Forget your password?" outcome="/resetpassword.xhtml" />
-                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
-
-                            <p:commandButton value="Login" actionListener="#{commonInfraMB.logInMember(actionEvent)}" ajax="true" />
-                        </h:form>
-                    </div>
-                </div>
-            </div>
-
-            <script type="text/javascript">
-                PrimeFaces.validator['custom.emailValidator'] = {
-                    pattern: /\S+@\S+/,
-                    validate: function(element, value) {
-                        //use element.data() to access validation metadata, in this case there is none.
-                        if (!this.pattern.test(value)) {
-                            throw {
-                                summary: 'Validation Error',
-                                detail: value + ' is not a valid email.'
-                            }
-                        }
-                    }
-                };
-            </script>
-            <script type="text/javascript">
-                function toggleLoginModal() {
-                    $("#loginModal").modal('show');
-                }
-
-                function userLocked() {
-                    $.notify("User Locked.", "error");
-                }
-            </script>
-            <style>
-                #loginModal>.modal-backdrop.fade.in
-                {
-                    opacity: .1; 
-                }
-            </style>
+                        <a href="MemberLogIn.xhtml" >Login</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </c:if>
+                    <c:if test="#{commonInfraMB.logInCust!=-1}">
+                        <a href="#" >#{accMngmtMB.outCust.fistName}'s Account</a>&nbsp;| 
+                        <a href="#" >Cart</a>&nbsp;| 
+                        <a href="#" >Wish List</a>&nbsp;| 
+                        <p:commandLink actionListener="#{commonInfraMB.custLogout(actionEvent)}" value="Log out"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </c:if>
+                </h:form>
         </ui:composition>
     </body>
 </html>

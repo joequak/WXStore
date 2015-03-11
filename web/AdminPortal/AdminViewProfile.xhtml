@@ -11,13 +11,16 @@
         <ui:composition template="./../templates/AdminTemplate.xhtml">
 
             <ui:define name="content">
+                #{commonInfraMB.checkAdminLogin()}
                 <p:growl id="growl1" autoUpdate="true" life="5000" />
-                <table align="center" cellpadding="0" cellspacing="0" style="min-width: 600px;">
+                <h:form>
+                    <table align="center" cellpadding="0" cellspacing="0" style="min-width: 600px;">
                     <tr>
                         <td>
                             <p:panel header="#{accMngmtMB.outAdmin.firstName}'s Account Information">
                                 <table width="100%" cellpadding="5" cellspacing="0">
-                                    <tr>
+                                    <tbody style ="text-align: left">
+                                        <tr>
                                         <td width="20%">
                                             <p:spacer></p:spacer>
                                         </td>
@@ -83,11 +86,16 @@
                                             <p:spacer></p:spacer>
                                         </td>
                                     </tr>
+                                    </tbody>
                                 </table>
                             </p:panel>
+                            <p:button value="Cancel Account" outcome="/faces/AdminPortal/AdminCancelAccount.xhtml"
+                                      style="margin-top: 10px"/>
                         </td>
                     </tr>
                 </table>
+                </h:form>
+                
             </ui:define>
 
         </ui:composition>
