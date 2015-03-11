@@ -6,19 +6,15 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="./../templates/AdminTemplate.xhtml">
+    <ui:composition template="./../templates/mainTemplate.xhtml">
         <ui:param name="pageName" value="Admin Login" />
 
         <ui:define name="more-imports">
             <ui:insert>
             </ui:insert>
         </ui:define>
-        <ui:define name="nav" >
-
-        </ui:define>
 
         <ui:define name="content">
-            #{popMB.populate()}
             <br></br>
             <h:form id="formLogin" class="form-signin">
                 <p:growl id="growl" autoUpdate="true" life="3000" />
@@ -26,8 +22,7 @@
                     <h:panelGrid columns="2" style="margin: auto">  
                         <h:outputLabel for="username" value="Email Address : " />  
                         <p:inputText id="username" value="#{commonInfraMB.emailAdd}" required="true" label="Username" />
-
-
+                        
                         <h:outputLabel for="password" value="Password : " />  
                         <p:password id="password" value="#{commonInfraMB.password}" required="true" label="Password" />    
                     </h:panelGrid>
@@ -39,7 +34,7 @@
                 <br></br>
                 <br></br>
                 <p:link value="Not a member yet? Register Here." outcome="/WineXpressStore/VisitorRegister.xhtml" ></p:link>
-                </h:form>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>
