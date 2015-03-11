@@ -62,7 +62,7 @@ public class CommonInfraMB {
     
     //WebService methods
     //Admin methods
-    public void logInAdmin(ActionEvent actionEvent) throws IOException, GeneralSecurityException {
+    public void adminLogIn(ActionEvent actionEvent) throws IOException, GeneralSecurityException {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
@@ -76,7 +76,7 @@ public class CommonInfraMB {
     }
 
     //Customer methods
-    public void logInMember(ActionEvent actionEvent) throws IOException, GeneralSecurityException {
+    public void memberLogIn(ActionEvent actionEvent) throws IOException, GeneralSecurityException {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
@@ -91,14 +91,14 @@ public class CommonInfraMB {
 
     //Non WS methods exposed and used in web pages
     public void checkAdminLogin() throws IOException {
-        if (getLogInAdmin() == -1) {
+        if (this.getLogInAdmin() == -1) {
             errorMsg("Please login before proceeding.");
             FacesContext.getCurrentInstance().getExternalContext().redirect("../errorAdmin.xhtml");
         }
     }
     
     public void checkCustLogin() throws IOException {
-        if (getLogInCust() == -1) {
+        if (this.getLogInCust() == -1) {
             errorMsg("Please login before proceeding.");
             FacesContext.getCurrentInstance().getExternalContext().redirect("../error.xhtml");
         }
@@ -108,8 +108,9 @@ public class CommonInfraMB {
     //Logout Method
     public void adminLogout(ActionEvent actionEvent) throws IOException, Exception {
         System.out.println("CommonInfraMB: LOGOUT");
-        this.setLogInAdmin(-1);
-        this.setLogInCust(-1);
+        long reset = -1;
+        this.setLogInAdmin(reset);
+        this.setLogInCust(reset);
         infoMsg("Logout Successful.");
         FacesContext.getCurrentInstance().getExternalContext().redirect("../AdminPortal/AdminLogIn.xhtml");
     }
