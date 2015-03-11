@@ -10,6 +10,7 @@
         <ui:composition template="./../templates/AdminTemplate.xhtml">
 
             <ui:define name="content">
+                #{commonInfraMB.checkAdminLogin()}
                 <h:form>
                     <p:growl id="growl1" autoUpdate="true" life="5000" />
                     <table align="center" cellpadding="0" cellspacing="0" style="min-width: 600px;">
@@ -17,7 +18,8 @@
                             <td>
                                 <p:panel header="Edit Particulars">
                                     <table width="100%" cellpadding="5" cellspacing="0">
-                                        <tr>
+                                        <tbody style ="text-align: left">
+                                            <tr>
                                             <td width="20%">
                                                 <p:spacer></p:spacer>
                                             </td>
@@ -55,7 +57,7 @@
                                                 First Name:  
                                             </td>
                                             <td width="65%">
-                                                #{accMngmtMB.outAdmin.firstName} <p:inputText id="firstName" value="#{accMngmtMB.newAdminUsr.firstName}" required="true" requiredMessage="Please input your First Name"/>
+                                                <p:inputText id="firstName" value="#{accMngmtMB.newAdminUsr.firstName}" required="true" requiredMessage="Please input your First Name"/>
                                             </td>
                                             <td width="5%">
                                                 <p:spacer></p:spacer>
@@ -66,12 +68,14 @@
                                                 Last Name:  
                                             </td>
                                             <td width="65%">
-                                                #{accMngmtMB.outAdmin.lastName} <p:inputText id="lastName" value="#{accMngmtMB.newAdminUsr.lastName}" required="true" requiredMessage="Please input your Last Name"/>
+                                                <p:inputText id="lastName" value="#{accMngmtMB.newAdminUsr.lastName}" required="true" requiredMessage="Please input your Last Name"/>
                                             </td>
                                             <td width="5%">
                                                 <p:spacer></p:spacer>
                                             </td>
                                         </tr>
+                                        </tbody>
+                                        
                                     </table>
                                     <p:commandButton id="saveEdit" value="Save Changes" actionListener="#{accMngmtMB.editParticularsAdmin(actionEvent)}"  
                                                      style="margin-top: 10px; margin-right:20px;" />

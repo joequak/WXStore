@@ -7,6 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="./../templates/AdminTemplate.xhtml">
+        
         <ui:param name="pageName" value="Admin Home" />
 
         <ui:define name="more-imports">
@@ -15,6 +16,7 @@
         </ui:define>
             
         <ui:define name="left">
+            #{commonInfraMB.checkAdminLogin()}
             <p>this is left container</p>
         </ui:define>
 
