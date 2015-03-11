@@ -1,59 +1,47 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <h:head>
-        <title>WineXpress Admin LogIn</title>
-        <style type="text/css">
-            body {
-                padding-top: 40px;
-                padding-bottom: 40px;
-                background-color: #f5f5f5;
-            }
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-            .form-signin {
-                max-width: 400px;
-                padding: 19px 29px 29px;
-                margin: 0 auto 20px;
-                background-color: #fff;
-                border: 1px solid #e5e5e5;
-                -webkit-border-radius: 5px;
-                -moz-border-radius: 5px;
-                border-radius: 5px;
-                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                box-shadow: 0 1px 2px rgba(0,0,0,.05);
-            }
+    <ui:composition template="./../templates/AdminTemplate.xhtml">
+        <ui:param name="pageName" value="Admin Login" />
 
-            .ui-widget, .ui-widget, .links {
-                font-size: 13px;
-                font-family: futura;
-                alignment-adjust: central;
-            }
-        </style>
-    </h:head>
-    <h:body>
-        #{popMB.populate()}
-        <h1 style="text-align:center" >Welcome to WineXpress Admin Portal</h1>
-        <h:form id="formLogin" class="form-signin">
-            <p:growl id="growl" autoUpdate="true" life="3000" />
-            <p:panel id="pnl" header="Admin Login" style="margin-bottom:10px; text-align:center;" >  
-                <h:panelGrid columns="2" style="margin: auto">  
-                    <h:outputLabel for="username" value="Email Address : " />  
-                    <p:inputText id="username" value="#{commonInfraMB.emailAdd}" required="true" label="Username" />
+        <ui:define name="more-imports">
+            <ui:insert>
+            </ui:insert>
+        </ui:define>
+        <ui:define name="nav" >
+
+        </ui:define>
+
+        <ui:define name="content">
+            #{popMB.populate()}
+            <br></br>
+            <h:form id="formLogin" class="form-signin">
+                <p:growl id="growl" autoUpdate="true" life="3000" />
+                <p:panel id="pnl" header="Admin Login" style="margin-bottom:10px; text-align:center;" >  
+                    <h:panelGrid columns="2" style="margin: auto">  
+                        <h:outputLabel for="username" value="Email Address : " />  
+                        <p:inputText id="username" value="#{commonInfraMB.emailAdd}" required="true" label="Username" />
 
 
-                    <h:outputLabel for="password" value="Password : " />  
-                    <p:password id="password" value="#{commonInfraMB.password}" required="true" label="Password" />    
-                </h:panelGrid>
-                <h:commandButton id="loginBtn" value="Login" action="#{commonInfraMB.logInAdmin(actionEvent)}" style="" />  
-            </p:panel>
-            <h:panelGrid columns="1" style="margin: auto">
+                        <h:outputLabel for="password" value="Password : " />  
+                        <p:password id="password" value="#{commonInfraMB.password}" required="true" label="Password" />    
+                    </h:panelGrid>
+                    <br></br>
+                    <h:commandButton id="loginBtn" value="Login" action="#{commonInfraMB.adminLogIn(actionEvent)}" style="" /> 
+                    <br></br>
+                    <h:commandLink id="forgetPass" value="Forget Password? Click here" action="#{commonInfraMB.adminLogIn(actionEvent)}" style="font-size:12px" />  
+                </p:panel>
+                <br></br>
+                <br></br>
+                <h:panelGrid columns="1" style="margin: auto">
                     <p:clock />
-            </h:panelGrid>
-        </h:form>
-    </h:body>
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>

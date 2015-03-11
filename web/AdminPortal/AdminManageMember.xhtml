@@ -4,176 +4,189 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <body>
+    <ui:composition template="./../templates/AdminTemplate.xhtml">
+        <ui:param name="pageName" value="Admin Management" />
 
-        <ui:composition template="./../templates/AdminTemplate.xhtml">
+        <ui:define name="more-imports">
+            <ui:insert>
+            </ui:insert>
+        </ui:define>
 
-            <ui:define name="content">
-                <h:form id="form">
-                    <p:growl id="growl1" autoUpdate="true" life="5000" />
-                    <table align="center" cellpadding="0" cellspacing="0" style="min-width: 600px;">
-                        <tr>
-                            <td>
-                                <p:dataTable id="memberDT" 
-                                             var="member" value="#{accMngmtMB.custList}"
-                                             widgetVar="memberDataTable"
-                                             rows="20"
-                                             paginator="true"
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             rowsPerPageTemplate="10, 20, 50, 100"
-                                             emptyMessage="No Members found with given criteria"
-                                             filteredValue="#{accMngmtMB.filteredCustList}" 
-                                             sortBy="#{member.id}" 
-                                             sortOrder="ascending" 
-                                             style="margin-bottom:20px">
-                                    <f:facet name="header">
-                                        List of Members
+        <ui:define name="left">
+            <h:form>  
+                <p:growl id="messages"/>
+
+                <p:menubar>
+                    <p:menuitem value="Members Management" url="../AdminPortal/AdminManageMember.xhtml" />
+                    <p:separator />
+                    <p:menuitem value="New Admin Account" url="../AdminPortal/AdminCreateAdmin.xhtml" />
+                    <p:separator />
+                    <p:menuitem value="Reactive Admin Account" url="../AdminPortal/AdminReactivateAdmin.xhtml" />
+                </p:menubar>
+            </h:form>
+        </ui:define>
+        <ui:define name="right">
+            <h:form id="form">
+                <p:growl id="growl1" autoUpdate="true" life="5000" />
+                <table align="center" cellpadding="0" cellspacing="0" style="min-width: 600px;">
+                    <tr>
+                        <td>
+                            <p:dataTable id="memberDT" 
+                                         var="member" value="#{accMngmtMB.custList}"
+                                         widgetVar="memberDataTable"
+                                         rows="20"
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="10, 20, 50, 100"
+                                         emptyMessage="No Members found with given criteria"
+                                         filteredValue="#{accMngmtMB.filteredCustList}" 
+                                         sortBy="#{member.id}" 
+                                         sortOrder="ascending" 
+                                         style="margin-bottom:20px">
+                                <f:facet name="header">
+                                    List of Members
+                                </f:facet>
+                                <p:column headerText="Id" 
+                                          sortBy="#{member.id}"
+                                          filterBy="#{member.id}" 
+                                          filterMatchMode="contains" 
+                                          style="width: 10%">
+                                    <h:outputText value="#{member.id}" />
+                                </p:column>
+
+                                <p:column headerText="Email"
+                                          filterBy="#{member.email}" 
+                                          filterMatchMode="contains" 
+                                          style="width: 20%">
+                                    <h:outputText value="#{member.email}" />
+                                </p:column>
+
+                                <p:column headerText="First Name"
+                                          filterBy="#{member.fistName}" 
+                                          filterMatchMode="contains" 
+                                          style="width: 20%">
+                                    <h:outputText value="#{member.fistName}" />
+                                </p:column>
+
+                                <p:column headerText="Last Name" 
+                                          filterBy="#{member.lastName}" 
+                                          filterMatchMode="contains" 
+                                          style="width: 20%">
+                                    <h:outputText value="#{member.lastName}" />
+                                </p:column>
+
+                                <p:column headerText="Status" 
+                                          filterBy="#{member.status}" 
+                                          filterMatchMode="equals"
+                                          style="width: 15%" >
+                                    <f:facet name="filter">
+                                        <p:selectOneMenu onchange="PF('memberDataTable').filter()">
+                                            <f:converter converterId="javax.faces.Boolean" />
+                                            <f:selectItem itemLabel="All" itemValue="" />
+                                            <f:selectItem itemLabel="Active" itemValue="true" />
+                                            <f:selectItem itemLabel="Blocked" itemValue="false" />
+                                        </p:selectOneMenu>
                                     </f:facet>
-                                    <p:column headerText="Id" 
-                                              sortBy="#{member.id}"
-                                              filterBy="#{member.id}" 
-                                              filterMatchMode="contains" 
-                                              style="width: 10%">
-                                        <h:outputText value="#{member.id}" />
-                                    </p:column>
-                                    
-                                    <p:column headerText="Email"
-                                              filterBy="#{member.email}" 
-                                              filterMatchMode="contains" 
-                                              style="width: 20%">
-                                        <h:outputText value="#{member.email}" />
-                                    </p:column>
-                                    
-                                    <p:column headerText="First Name"
-                                              filterBy="#{member.fistName}" 
-                                              filterMatchMode="contains" 
-                                              style="width: 20%">
-                                        <h:outputText value="#{member.fistName}" />
-                                    </p:column>
-                                    
-                                    <p:column headerText="Last Name" 
-                                              filterBy="#{member.lastName}" 
-                                              filterMatchMode="contains" 
-                                              style="width: 20%">
-                                        <h:outputText value="#{member.lastName}" />
-                                    </p:column>
-                                    
-                                    <p:column headerText="Status" 
-                                              filterBy="#{member.status}" 
-                                              filterMatchMode="equals"
-                                              style="width: 15%" >
-                                        <f:facet name="filter">
-                                            <p:selectOneMenu onchange="PF('memberDataTable').filter()">
-                                                <f:converter converterId="javax.faces.Boolean" />
-                                                <f:selectItem itemLabel="All" itemValue="" />
-                                                <f:selectItem itemLabel="Active" itemValue="true" />
-                                                <f:selectItem itemLabel="Blocked" itemValue="false" />
-                                            </p:selectOneMenu>
+                                    <h:outputText value="#{member.status ? 'Active' : 'Blocked'}" />
+                                </p:column>
+
+                                <p:column headerText="View Details" 
+                                          style="width:5%;text-align: center">
+                                    <p:commandButton update=":form:memberDetail" oncomplete="PF('memberDialog').show()" 
+                                                     icon="ui-icon-search" title="View" >
+                                        <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="View Purchase History" 
+                                          style="width:8%;text-align: center">
+                                    <p:commandButton update=":form:memberPurchaseHistoryDetail" oncomplete="PF('memberPurchaseHistoryDialog').show()" 
+                                                     icon="ui-icon-search" title="View">
+                                        <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <p:dialog header="Member Info" widgetVar="memberDialog" 
+                                      modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                <p:outputPanel id="memberDetail" style="text-align:center;">
+                                    <p:panelGrid  columns="2" rendered="#{not empty accMngmtMB.selectedCustomer}" columnClasses="label,value">
+                                        <f:facet name="header">
+                                            Dialog Header
                                         </f:facet>
-                                        <h:outputText value="#{member.status ? 'Active' : 'Blocked'}" />
-                                    </p:column>
-                                    
-                                    <p:column headerText="View Details" 
-                                              style="width:5%;text-align: center">
-                                        <p:commandButton update=":form:memberDetail" oncomplete="PF('memberDialog').show()" 
-                                                         icon="ui-icon-search" title="View" >
-                                             <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
-                                        </p:commandButton>
-                                    </p:column>
-                                    
-                                    <p:column headerText="View Purchase History" 
-                                              style="width:8%;text-align: center">
-                                         <p:commandButton update=":form:memberPurchaseHistoryDetail" oncomplete="PF('memberPurchaseHistoryDialog').show()" 
-                                                          icon="ui-icon-search" title="View">
-                                             <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
-                                        </p:commandButton>
-                                    </p:column>
-                                    
-                                </p:dataTable>
-                                
-                                <p:dialog header="Member Info" widgetVar="memberDialog" 
-                                          modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                    <p:outputPanel id="memberDetail" style="text-align:center;">
-                                        <p:panelGrid  columns="2" rendered="#{not empty accMngmtMB.selectedCustomer}" columnClasses="label,value">
-                                            <f:facet name="header">
-                                                Dialog Header
-                                            </f:facet>
 
-                                            <h:outputText value="Id:" />
-                                            <h:outputText value="#{accMngmtMB.selectedCustomer.id}" />
+                                        <h:outputText value="Id:" />
+                                        <h:outputText value="#{accMngmtMB.selectedCustomer.id}" />
 
-                                            <h:outputText value="Email" />
-                                            <h:outputText value="#{accMngmtMB.selectedCustomer.email}" />
+                                        <h:outputText value="Email" />
+                                        <h:outputText value="#{accMngmtMB.selectedCustomer.email}" />
 
-                                            <h:outputText value="First Name" />
-                                            <h:outputText value="#{accMngmtMB.selectedCustomer.fistName}"/>
+                                        <h:outputText value="First Name" />
+                                        <h:outputText value="#{accMngmtMB.selectedCustomer.fistName}"/>
 
-                                            <h:outputText value="Last Name" />
-                                            <h:outputText value="#{accMngmtMB.selectedCustomer.lastName}" />
-                                        </p:panelGrid>
-                                        <p:commandButton value="Block" title="Block" 
-                                                         actionListener="#{accMngmtMB.blockCust(actionEvent)}"
-                                                         rendered="#{accMngmtMB.selectedCustomer.status == true}">
-                                            <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
-                                        </p:commandButton>
-                                        <p:commandButton value="Reactivate" title="Reactivate" 
-                                                         actionListener="#{accMngmtMB.activateAccount(actionEvent)}" 
-                                                         rendered="#{accMngmtMB.selectedCustomer.status == false}">
-                                            <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
-                                       </p:commandButton>
-                                    </p:outputPanel>
-                                </p:dialog>
-                                
-                                <p:dialog header="Member's Purchase History Info" widgetVar="memberPurchaseHistoryDialog" 
-                                          modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
-                                    <p:outputPanel id="memberPurchaseHistoryDetail" style="text-align:center;" >
-                                        <p:dataTable id="memberPurchaseHistoryDT" 
-                                                     var="pHist" value="#{accMngmtMB.selectedCustomer.orderDetailCollection}"
-                                                     rows="20" paginator="true"
-                                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                     rowsPerPageTemplate="10, 20, 50, 100"
-                                                     emptyMessage="No Purchase History found with given criteria" 
-                                                     sortBy="#{pHist.ordDate}" sortOrder="descending" 
-                                                     style="margin-bottom:20px" >
-                                            <f:facet name="header">
-                                                List of Purchases
-                                            </f:facet>
-                                            <p:column headerText="Id" 
-                                                      sortBy="#{pHist.id}"
-                                                      style="width: 10%">
-                                                <h:outputText value="#{pHist.id}" />
-                                            </p:column>
-                                            <p:column headerText="Order Date" 
-                                                      sortBy="#{pHist.ordDate}"
-                                                      style="width: 10%">
-                                                <h:outputText value="#{pHist.ordDate}" />
-                                            </p:column>
-                                            <p:column headerText="Status" 
-                                                      style="width: 10%">
-                                                <h:outputText value="#{pHist.status}" />
-                                            </p:column>
-                                            <p:column headerText="Total Price" 
-                                                      style="width: 10%">
-                                                <h:outputText value="#{pHist.totalPrice}" />
-                                            </p:column>
-                                            <p:column headerText="orderItemCollection" 
-                                                      style="width: 10%">
-                                                <h:outputText value="#{pHist.orderItemCollection}" />
-                                            </p:column>
+                                        <h:outputText value="Last Name" />
+                                        <h:outputText value="#{accMngmtMB.selectedCustomer.lastName}" />
+                                    </p:panelGrid>
+                                    <p:commandButton value="Block" title="Block" 
+                                                     actionListener="#{accMngmtMB.blockCust(actionEvent)}"
+                                                     rendered="#{accMngmtMB.selectedCustomer.status == true}">
+                                        <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
+                                    </p:commandButton>
+                                    <p:commandButton value="Reactivate" title="Reactivate" 
+                                                     actionListener="#{accMngmtMB.activateAccount(actionEvent)}" 
+                                                     rendered="#{accMngmtMB.selectedCustomer.status == false}">
+                                        <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
+                                    </p:commandButton>
+                                </p:outputPanel>
+                            </p:dialog>
 
-                                        </p:dataTable>
-                                    </p:outputPanel>
-                                </p:dialog>
-                            </td>
-                        </tr>
-                    </table>
-                </h:form>
-            </ui:define>
+                            <p:dialog header="Member's Purchase History Info" widgetVar="memberPurchaseHistoryDialog" 
+                                      modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                                <p:outputPanel id="memberPurchaseHistoryDetail" style="text-align:center;" >
+                                    <p:dataTable id="memberPurchaseHistoryDT" 
+                                                 var="pHist" value="#{accMngmtMB.selectedCustomer.orderDetailCollection}"
+                                                 rows="20" paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="10, 20, 50, 100"
+                                                 emptyMessage="No Purchase History found with given criteria" 
+                                                 sortBy="#{pHist.ordDate}" sortOrder="descending" 
+                                                 style="margin-bottom:20px" >
+                                        <f:facet name="header">
+                                            List of Purchases
+                                        </f:facet>
+                                        <p:column headerText="Id" 
+                                                  sortBy="#{pHist.id}"
+                                                  style="width: 10%">
+                                            <h:outputText value="#{pHist.id}" />
+                                        </p:column>
+                                        <p:column headerText="Order Date" 
+                                                  sortBy="#{pHist.ordDate}"
+                                                  style="width: 10%">
+                                            <h:outputText value="#{pHist.ordDate}" />
+                                        </p:column>
+                                        <p:column headerText="Status" 
+                                                  style="width: 10%">
+                                            <h:outputText value="#{pHist.status}" />
+                                        </p:column>
+                                        <p:column headerText="Total Price" 
+                                                  style="width: 10%">
+                                            <h:outputText value="#{pHist.totalPrice}" />
+                                        </p:column>
+                                        <p:column headerText="orderItemCollection" 
+                                                  style="width: 10%">
+                                            <h:outputText value="#{pHist.orderItemCollection}" />
+                                        </p:column>
 
-        </ui:composition>
-
-    </body>
+                                    </p:dataTable>
+                                </p:outputPanel>
+                            </p:dialog>
+                        </td>
+                    </tr>
+                </table>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>
