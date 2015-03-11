@@ -17,34 +17,31 @@
                     
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="email" style="font-weight: bold" value="Email Address: " />
+                            <p:outputLabel style="font-weight: bold" value="Email Address: " />
                         </p:column>
                         <p:column>
-                            <p:inputText required="true" label="Email Address" requiredMessage="Email Address is required." validatorMessage="Invalid email format" id="email" value="#{custSupportMB.activeEnquiry.emailAddress}">
-                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                            </p:inputText>
+                            <h:outputText  value="#{custSupportMB.activeEnquiry.emailAddress}">
+                            </h:outputText>                           
                         </p:column>                                   
                     </p:row>
 
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="subject" style="font-weight: bold" value="Subject: " />
+                            <p:outputLabel style="font-weight: bold" value="Subject: " />
                         </p:column>
                         <p:column>
-                            <p:inputText required="true" label="Subject" requiredMessage="Please enter subject." id="subject" value="#{custSupportMB.activeEnquiry.subject}">
-
-                            </p:inputText>
+                            <h:outputText  value="#{custSupportMB.activeEnquiry.subject}">
+                            </h:outputText>
                         </p:column>                                   
                     </p:row>
 
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="content" style="font-weight: bold" value="Content:" />
+                            <p:outputLabel  style="font-weight: bold" value="Content:" />
                         </p:column>
                         <p:column>
-                            <p:inputText required="true" label="Content" requiredMessage="Content is required." id="content" value="#{custSupportMB.activeEnquiry.content}">
-
-                            </p:inputText>
+                            <h:outputText  value="#{custSupportMB.activeEnquiry.content}">
+                            </h:outputText>
                         </p:column>               
                     </p:row>
                     

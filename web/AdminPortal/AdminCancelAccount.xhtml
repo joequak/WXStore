@@ -10,6 +10,7 @@
         <ui:composition template="./../templates/AdminTemplate.xhtml">
 
             <ui:define name="content">
+                #{commonInfraMB.checkAdminLogin()}
                 <h:form>
                     <p:growl id="growl1" autoUpdate="true" life="5000" />
                     <table align="center" cellpadding="0" cellspacing="0" style="min-width: 600px;">
@@ -30,7 +31,7 @@
                                         </tr>
                                     </table>
                                     <p:commandButton id="cancelAccount" value="Cancel Account" actionListener="#{accMngmtMB.cancelAccount(actionEvent)}"  
-                                                     style="margin-top: 10px; margin-right:20px;" />
+                                                     style="margin-top: 10px" />
                                 </p:panel>
                             </td>
                         </tr>

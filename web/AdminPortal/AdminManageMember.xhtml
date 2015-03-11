@@ -15,9 +15,9 @@
         </ui:define>
 
         <ui:define name="left">
+            #{commonInfraMB.checkAdminLogin()}
             <h:form>  
                 <p:growl id="messages"/>
-
                 <p:menubar>
                     <p:menuitem value="Members Management" url="../AdminPortal/AdminManageMember.xhtml" />
                     <p:separator />
@@ -49,38 +49,19 @@
                                     List of Members
                                 </f:facet>
                                 <p:column headerText="Id" 
-                                          sortBy="#{member.id}"
-                                          filterBy="#{member.id}" 
-                                          filterMatchMode="contains" 
-                                          style="width: 10%">
+                                          sortBy="#{member.id}" style="width: 10%">
                                     <h:outputText value="#{member.id}" />
                                 </p:column>
 
                                 <p:column headerText="Email"
                                           filterBy="#{member.email}" 
-                                          filterMatchMode="contains" 
-                                          style="width: 20%">
+                                          filterMatchMode="contains" style="width: 50%">
                                     <h:outputText value="#{member.email}" />
-                                </p:column>
-
-                                <p:column headerText="First Name"
-                                          filterBy="#{member.fistName}" 
-                                          filterMatchMode="contains" 
-                                          style="width: 20%">
-                                    <h:outputText value="#{member.fistName}" />
-                                </p:column>
-
-                                <p:column headerText="Last Name" 
-                                          filterBy="#{member.lastName}" 
-                                          filterMatchMode="contains" 
-                                          style="width: 20%">
-                                    <h:outputText value="#{member.lastName}" />
                                 </p:column>
 
                                 <p:column headerText="Status" 
                                           filterBy="#{member.status}" 
-                                          filterMatchMode="equals"
-                                          style="width: 15%" >
+                                          filterMatchMode="equals" style="width: 15%">
                                     <f:facet name="filter">
                                         <p:selectOneMenu onchange="PF('memberDataTable').filter()">
                                             <f:converter converterId="javax.faces.Boolean" />
@@ -93,7 +74,7 @@
                                 </p:column>
 
                                 <p:column headerText="View Details" 
-                                          style="width:5%;text-align: center">
+                                          style="width: 10%; text-align: center">
                                     <p:commandButton update=":form:memberDetail" oncomplete="PF('memberDialog').show()" 
                                                      icon="ui-icon-search" title="View" >
                                         <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
@@ -101,7 +82,7 @@
                                 </p:column>
 
                                 <p:column headerText="View Purchase History" 
-                                          style="width:8%;text-align: center">
+                                          style="width: 10%;text-align: center">
                                     <p:commandButton update=":form:memberPurchaseHistoryDetail" oncomplete="PF('memberPurchaseHistoryDialog').show()" 
                                                      icon="ui-icon-search" title="View">
                                         <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
@@ -114,10 +95,6 @@
                                       modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                 <p:outputPanel id="memberDetail" style="text-align:center;">
                                     <p:panelGrid  columns="2" rendered="#{not empty accMngmtMB.selectedCustomer}" columnClasses="label,value">
-                                        <f:facet name="header">
-                                            Dialog Header
-                                        </f:facet>
-
                                         <h:outputText value="Id:" />
                                         <h:outputText value="#{accMngmtMB.selectedCustomer.id}" />
 
@@ -132,12 +109,14 @@
                                     </p:panelGrid>
                                     <p:commandButton value="Block" title="Block" 
                                                      actionListener="#{accMngmtMB.blockCust(actionEvent)}"
-                                                     rendered="#{accMngmtMB.selectedCustomer.status == true}">
+                                                     rendered="#{accMngmtMB.selectedCustomer.status == true}"
+                                                     style="margin-top: 5px">
                                         <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
                                     </p:commandButton>
                                     <p:commandButton value="Reactivate" title="Reactivate" 
                                                      actionListener="#{accMngmtMB.activateAccount(actionEvent)}" 
-                                                     rendered="#{accMngmtMB.selectedCustomer.status == false}">
+                                                     rendered="#{accMngmtMB.selectedCustomer.status == false}"
+                                                     style="margin-top: 5px">
                                         <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
                                     </p:commandButton>
                                 </p:outputPanel>
