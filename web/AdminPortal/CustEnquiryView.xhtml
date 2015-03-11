@@ -30,10 +30,17 @@
                     </p:column> 
                         
                         
+                        
+                        <p:column headerText="In Date" >
+                            <h:outputText value="#{enquiry.inDate}  " >
+                                <f:convertDateTime timeZone="Singapore" type ="date" pattern="dd-MM-yyy"/>
+                            </h:outputText>
+                      
+                    </p:column> 
 
                     <p:column style="width: 100px" headerText="Actioin" >  
                         
-                        <p:commandButton id="btn5" value="Reply" actionListener="#{custSupportMB.reply(enquiry)}" ajax="true">
+                        <p:commandButton id="btn5" value="Reply" action="#{custSupportMB.reply(enquiry)}">
                         </p:commandButton>
                     </p:column> 
 
