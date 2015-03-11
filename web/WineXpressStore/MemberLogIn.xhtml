@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui" >
     
     <body>
@@ -10,35 +11,45 @@
         <ui:composition template="./../templates/StoreTemplate.xhtml">
 
             <ui:define name="content">
-                <h:form id="formLogin" style="
-                padding: 19px 29px 29px;
-                margin: 0 auto 20px;
-                background-color: #fff;
-                border: 1px solid #e5e5e5;
-                -webkit-border-radius: 5px;
-                -moz-border-radius: 5px;
-                border-radius: 5px;
-                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                box-shadow: 0 1px 2px rgba(0,0,0,.05);">
-                    <p:growl id="growl" autoUpdate="true" life="3000" />
-                    <p:panel id="pnl" header="Member Login" style="margin-bottom:10px; text-align:center;" >  
-                        <h:panelGrid columns="2" style="margin: auto">  
-                            <h:outputLabel for="username" value="Email Address : " />  
-                            <p:inputText id="username" value="#{commonInfraMB.emailAdd}" required="true" label="Username" />
+                
+                
+            <div class="container">
+                <h:form>
+                    <!-- login form -->
+                    <h2>Member Login</h2>
+                    <div class="input-group form-control-spacing">
+                        <div class="input-group-addon input-addon-fixedwidth">Username</div>
+                        <h:inputText id="usernameInput" value="#{commonInfraMB.emailAdd}" styleClass="form-control" pt:placeholder="Enter your username">
+                            <!--<f:validator validatorId="custom.emailValidator" />-->
+                        </h:inputText>
+                        <h:message styleClass="errorMsg" for="usernameInput" />
+                    </div>
 
+                    <div class="input-group form-control-spacing">
+                        <div class="input-group-addon input-addon-fixedwidth">Password</div>
+                        <h:inputSecret id="passwordInput" value="#{commonInfraMB.password}" styleClass="form-control" pt:placeholder="Enter your password" />
+                    </div>
+                    <h:link value="Forget your password?" outcome="/resetpassword.xhtml" />
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
 
-                            <h:outputLabel for="password" value="Password : " />  
-                            <p:password id="password" value="#{commonInfraMB.password}" required="true" label="Password" />    
-                        </h:panelGrid>
-                        <h:commandButton id="loginBtn" value="Login" action="#{commonInfraMB.logInMember(actionEvent)}" style="" />  
-                    </p:panel>
-                    <p:link value="Not a member yet? Register Here." outcome="/WineXpressStore/VisitorRegister.xhtml" ></p:link>
-                    Forget password?
-                    <h:panelGrid columns="1" style="margin: auto">
-                            <p:clock />
-                    </h:panelGrid>
+                    <p:commandButton value="Login" actionListener="#{commonInfraMB.logInMember(actionEvent)}" ajax="true" />
                 </h:form>
+            </div>
+
+            <script type="text/javascript">
+                PrimeFaces.validator['custom.emailValidator'] = {
+                    pattern: /\S+@\S+/,
+                    validate: function(element, value) {
+                        //use element.data() to access validation metadata, in this case there is none.
+                        if (!this.pattern.test(value)) {
+                            throw {
+                                summary: 'Validation Error',
+                                detail: value + ' is not a valid email.'
+                            }
+                        }
+                    }
+                };
+            </script>
             </ui:define>
 
         </ui:composition>
