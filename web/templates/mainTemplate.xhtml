@@ -34,21 +34,18 @@
                         <ui:include src="/templates/snippets/navigation.xhtml" />
                     </ui:insert>
                     <!-- Content -->
-                    <div class="content-area">
-                        <ui:insert name="content" />
+                    <div class="container content-area">
+                        <ui:insert name="content" >
+                        </ui:insert>
+
                     </div>
                 </div>
-
                 <div class="push"></div>
-                
                 <div class="footer">
                     <ui:include src="/templates/snippets/footer.xhtml" />
                 </div>
+
             </ui:insert>
         </h:body>
     </f:view>
 </html>
-
-
-
-
