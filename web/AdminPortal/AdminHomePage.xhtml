@@ -7,19 +7,26 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="./../templates/AdminTemplate.xhtml">
+        #{commonInfraMB.checkAdminLogin()}
         <ui:param name="pageName" value="Admin Home" />
 
         <ui:define name="more-imports">
             <ui:insert>
             </ui:insert>
         </ui:define>
-            
-        <ui:define name="left">
-            <p>this is left container</p>
-        </ui:define>
 
-        <ui:define name="right">
-            <p>this is right container</p>        
-        </ui:define>
+        <ui:define name="content">
+            <img id="aboutUs" src="./../images/aboutUs.png"/>
+            <br></br>
+            <br></br>
+            <h4> Welcome Back #{accMngmtMB.outAdmin.firstName}</h4>
+            <p style="text-align: left; margin-left: 170px; margin-right: 170px">Wine Xpress is the leading chain of wine shops and wine-themed restaurants in South-East Asia.
+                Established in Bangkok in 1998, Wine Connection has been developing expertise in importing exclusive wines from around the
+                world, crafted Europeans beers, glassware and wine accessories for over 15 years.</p>
+
+            <p style="text-align: left; margin-left: 170px; margin-right: 170px">A dedicated team of experts tastes more than two thousand wines yearly to select the best value gems, award-winning classics
+                as well as exciting new tastes from all over the world. Close partnerships with winemakers allow for a vineyard-to-consumer
+                system, cutting intermediaries, and passing the great savings to you!</p>
+        </ui:define>       
     </ui:composition>
 </html>
