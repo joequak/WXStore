@@ -7,7 +7,6 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="./../templates/AdminTemplate.xhtml">
-        #{commonInfraMB.checkAdminLogin()}
         <ui:param name="pageName" value="Admin Home" />
 
         <ui:define name="more-imports">
@@ -15,6 +14,7 @@
             </ui:insert>
         </ui:define>
         <ui:define name="content">
+            #{commonInfraMB.checkAdminLogin()}
             <img id="aboutUs" src="./../images/aboutUs.png"/>
             <br></br>
             <br></br>
