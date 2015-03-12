@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Category Edit</title>
+
+        <link href="default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body> 
+
+        <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="CategoryWorkspace.xhtml"/>   
+
+        <p:breadCrumb>
+            <p:menuitem value="Home" url="categoryWelcom.xhtml"/>
+
+        </p:breadCrumb>
+
+        <p:menubar>
+            <p:menuitem value="Add Category" url="categoryAdd.xhtml?i=1" icon="ui-icon-plus"/>
+            <p:menuitem value="Edit Category" url="categoryEdit.xhtml?i=1" icon="ui-icon-pencil"/>
+            <p:menuitem value="View Category" url="categoryView.xhtml?i=1" icon="ui-icon-search"/>
+
+        </p:menubar>
+
+        <p:tab title="Manage Category">
+            <h:form id="formManagePart" >                    
+                <p:growl id="msgs" showDetail="true" />                        
+                <p:panel id="panelManagePart" header="Provide a category name you want to edit">
+                    <p:ajaxStatus style="width:20px;height:20px;">
+                        <f:facet name="start">
+                            <h:graphicImage value="/images/spinner.gif" />
+                        </f:facet>
+                        <f:facet name="complete">
+                            <h:outputText value="" />
+                        </f:facet>
+                    </p:ajaxStatus>
+                    <p:messages />        
+                    <p:panelGrid>   
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="wineName" style="font-weight: bold" value=" Category name : " />
+                            </p:column>
+                            <p:column>
+                                <p:inputText  label="Wine Name"  id="wineName" value="#{CategoryManagedBean.categoryName}">
+                                </p:inputText>
+                            </p:column>  
+                            <p:column>
+                                <p:commandButton id="btn" value="Search Category" update="viewPart msgs @parent" actionListener="#{CategoryManagedBean.searchCategory}" ajax="true" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton id="btnViewAllPart" value="View All Categorys" update="viewPart msgs @parent" actionListener="#{CategoryManagedBean.viewAllcategories}" ajax="true" />
+                            </p:column>
+                        </p:row>                         
+                    </p:panelGrid>
+                </p:panel>
+
+                <p:panel id="viewPart" >
+
+                    <p:dataTable id="categoryDT" var="category" value="#{CategoryManagedBean.categoryList}" editable ="true" style ="margin-right:20px" emptyMessage="No Result">
+                        <p:ajax event="rowEdit" listener="#{CategoryManagedBean.onRowEdit}" update=":formManagePart:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{CategoryManagedBean.onRowCancel}" update=":formManagePart:msgs" />
+
+                        <p:column headerText="Category Name" >
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{category.name}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="categoryName" value="#{category.name}" style="width:100%"/></f:facet>
+                            </p:cellEditor>     
+                        </p:column>  
+
+                        <p:column headerText="Delete" >
+                            <p:commandButton id="btn11" value="Delete" update=":formManagePart:viewPart, :formManagePart:msgs" actionListener="#{CategoryManagedBean.deletecategory}" ajax="true" >
+                                <f:attribute name="categoryId" value="#{category.id}"/>
+                                <p:confirm header="Confirmation" message="Are you sure you want to delete this Category?" icon="ui-icon-alert" />
+                            </p:commandButton>
+                            <p:confirmDialog global="true" >
+                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                        </p:column>   
+                        <p:column style="width:32px">
+                            <p:rowEditor />
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panel>
+
+            </h:form>
+
+
+
+        </p:tab>
+    </h:body>
+
+</html>

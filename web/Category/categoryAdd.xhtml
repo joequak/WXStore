@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link href="default.css" rel="stylesheet" type="text/css" /> 
+    </h:head>
+    <h:body> 
+        <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="CategoryWorkspace.xhtml"/>      
+        <p:breadCrumb>
+            <p:menuitem value="Home" url="categoryWelcom.xhtml"/>
+        </p:breadCrumb>
+        <p:menubar>
+            <p:menuitem value="Add Category" url="categoryAdd.xhtml?i=1" icon="ui-icon-plus"/>
+            <p:menuitem value="Edit Category" url="categoryEdit.xhtml?i=1" icon="ui-icon-pencil"/>
+            <p:menuitem value="View Category" url="categoryView.xhtml?i=1" icon="ui-icon-search"/>
+        </p:menubar>
+        <h:form id="formMain">
+            <p:panel id="panel" header="Add New Category">
+                <p:ajaxStatus style="width:20px;height:20px;">
+                        <f:facet name="start">
+                            <h:graphicImage value="/images/spinner.gif" />
+                        </f:facet>
+                        <f:facet name="complete">
+                            <h:outputText value="" />
+                        </f:facet>
+                    </p:ajaxStatus>
+                    <p:messages /> 
+                <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="10">
+                    <p:outputLabel for="country" value="Wine Country: " />
+                    <p:selectOneMenu id="country" value="#{CategoryManagedBean.categoryName}" style="width:200px"> 
+                        <f:selectItems value="#{CategoryManagedBean.countries}" />
+                    </p:selectOneMenu>
+
+
+
+                </h:panelGrid>
+                <p:commandButton id="btn" value="Create Category" update="panel" actionListener="#{CategoryManagedBean.saveNewCategory}" ajax="true"/>
+
+            </p:panel>
+        </h:form>
+    </h:body>
+
+</html>
+

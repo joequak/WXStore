@@ -58,5 +58,37 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/wx/custAccMngmtWS"/>
         <delete dir="${build.generated.dir}/jax-wsCache/CustAccMngmtWS"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-AdminAccMngmtWS, wsimport-client-CustAccMngmtWS"/>
+    <target name="wsimport-client-categoryWS" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/categoryWS"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/categoryWS" destdir="${build.generated.dir}/jax-wsCache/categoryWS" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/categoryWS/wsdl/localhost_8080/WineXpressWebService-war/categoryWS.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/WineXpressWebService-war/categoryWS?WSDL" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/categoryWS/wsdl/localhost_8080/WineXpressWebService-war/categoryWS.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/categoryWS"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/categoryWS">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-categoryWS" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/category"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/categoryWS"/>
+    </target>
+    <target name="wsimport-client-productWS" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/productWS"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/productWS" destdir="${build.generated.dir}/jax-wsCache/productWS" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/productWS/wsdl/localhost_8080/WineXpressWebService-war/productWS.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/WineXpressWebService-war/productWS?WSDL" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/productWS/wsdl/localhost_8080/WineXpressWebService-war/productWS.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/productWS"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/productWS">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-productWS" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/product"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/productWS"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-AdminAccMngmtWS, wsimport-client-CustAccMngmtWS, wsimport-client-categoryWS, wsimport-client-productWS"/>
 </project>
