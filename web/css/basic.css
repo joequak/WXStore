@@ -67,160 +67,7 @@ body{
     line-height: 5px;
 }
 
-.form-control-spacing{
-    margin-top:5px;
-    margin-bottom:5px;
-}
 
-.ui-datatable{
-    margin-top:10px;
-}
-
-.message-link{
-    text-decoration:underline;
-    cursor:pointer;
-}
-
-.message-link:hover{
-    text-decoration:none;
-}
-
-.pointer{
-    cursor:pointer;
-}
-.header-push-bottom{
-    margin-top:15px;
-}
-
-.ui-menu.ui-widget li > .ui-menuitem-link.ui-state-hover{
-    background:#aaa;
-}
-
-.input-addon-fixedwidth{
-    width:150px;
-}
-.service-image{
-    width:500px;
-    height:230px !important;
-}
-.service-title{
-    font-family:Century Gothic, sans-serif;
-    font-size:24pt;
-    color:#ababab;
-}
-h4.service-cost{
-    font-size:35pt;
-    font-family:Arial;
-    color:#bbb;
-}
-h4.service-des{
-    font-size:15pt;
-    font-family:Arial;
-    color:#808080;
-    font-style: italic;
-}   
-
-.alert-default{
-    background-color:#bababa;
-    border-color: #aaa;
-    cursor:pointer;
-}
-
-.alert-purple{
-    background-color:#dbd9f7;
-    color: #50318f;
-    border-color: #dfbcf1;
-}
-
-.alert-blue{
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
-}
-
-.alert-orange{
-    color: #8f5f31;
-    background-color: #f9efcb;
-    border-color: #f1e0bc;
-}
-.alert-green {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-}
-
-.alert-yellow {
-    color: #8a6d3b;
-    background-color: #fcf8e3;
-    border-color: #faebcc;
-}
-
-.font-brightred{
-    color:#ED2E38;
-}
-
-h2.roleTitle{
-    font-size:12pt;
-}
-
-.spacing{
-    margin-top:5px;
-    margin-bottom:5px;
-}
-.morespacing{
-    margin-top:10px;
-    margin-bottom:10px;
-}
-.message-content-area{
-    min-height:250px;
-}
-.wide-modal{
-    min-width: 700px;
-}
-
-.rights-btn{
-    min-width:450px;
-}
-
-.feedback-content-box{
-    background: rgba(240,240,240,0.85);
-    border-radius:10px;
-    padding:15px;
-
-}
-
-.like-box{
-    padding-left:10px;
-    padding-right:10px;
-    display:inline-block;
-}
-
-.ui-messages-error-icon{
-    display:none;
-}
-.ui-messages-error-summary{
-    margin-left:0px;
-}
-
-.rights-item{
-    font-family: Arial;
-    font-weight:400;
-    font-size:12pt;
-    padding:8px;
-}
-ul.rights-menu li{
-    min-width:400px;
-}
-
-.loader{
-    width:16px;
-    height:auto;
-}
-
-.ui-state-default{
-    border-radius: 0px;
-    -webkit-border-radius: 0px;
-}
 
 .left-container > ui-menu{
     width:100%;
@@ -252,21 +99,6 @@ ul.rights-menu li{
 .content-area{
     position:relative;
 }
-/*@media (min-width: 591px) {
-  .content-area>.container {
-    width: 577px;
-  }
-}
-@media (min-width: 764px) {
-  .content-area>.container {
-    width: 747px;
-  }
-}
-@media (min-width: 924px) {
-  .content-area>.container {
-    width: 901px;
-  }
-}*/
 
 .menu-width{
     width:100%;
@@ -313,3 +145,15 @@ body{
 }
 //*************************************************//
 
+//table panel
+.ui-panel-titlebar.loginPanel{
+    background-color:transparent;
+}
+.ui-helper-clearfix.loginPanel {
+    
+}
+.ui-widget-content.loginPanel {
+    background-color: transparent;
+}
+
+//************************************************//
