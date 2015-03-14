@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -26,7 +24,7 @@ import ws.CustSupportWS_Service;
  */
 @ManagedBean(name = "custSupportMB")
 @SessionScoped
-public class CustSupportMB  implements Serializable {
+public class CustSupportMB implements Serializable {
 
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/WineXpressWebService-war/CustSupportWS.wsdl")
     private CustSupportWS_Service service;
@@ -40,7 +38,7 @@ public class CustSupportMB  implements Serializable {
     @PostConstruct
     public void init() {
 
-        setEnquiryList(getEnquiry());
+        setEnquiryList(getNewEnquiry());
     }
 
     private String email;
@@ -51,8 +49,6 @@ public class CustSupportMB  implements Serializable {
     private String response;
 
     public void askEnquiry() {
-        System.out.println(email);
-
         CustEnquiry enquiry = new CustEnquiry();
 
         enquiry.setEmailAddress(email);
@@ -60,10 +56,18 @@ public class CustSupportMB  implements Serializable {
         enquiry.setContent(content);
 
         if (creatEnquiry(enquiry)) {
-
+            //update table of enquiry
+            setEnquiryList(getNewEnquiry());
+            
+            this.setEmail(null);
+            this.setSubject(null);
+            this.setContent(null);
+            
             FacesMessage msg;
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Enquiry Sent Successfully", "You have successfully created an enquiry, we will get back to you soon");
             FacesContext.getCurrentInstance().addMessage(null, msg);
+            
+            
         } else {
             FacesMessage msg;
             msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fail", "Failed to create enquiry, please try again later");
@@ -72,21 +76,29 @@ public class CustSupportMB  implements Serializable {
         }
 
     }
-    
-    public void reply(CustEnquiry enquiry){
-    setActiveEnquiry(enquiry);
-     try {
-         
-         System.out.println("tesing redirect");
-                FacesContext.getCurrentInstance().getExternalContext().redirect("CustEnquiryReply.xhtml");
-            } catch (IOException ex) {
-                
-            }
-    
+
+    public void reply(CustEnquiry enquiry) {
+        this.setActiveEnquiry(enquiry);
+        System.out.println(activeEnquiry.getContent());
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("CustEnquiryReply.xhtml");
+        } catch (IOException ex) {
+
+        }
+
     }
-    
-    public void sendReply(){
-    
+
+    public void sendReply() {
+
+        activeEnquiry.setReply(response);
+        sendResponse(activeEnquiry.getId(), activeEnquiry.getReply());
+
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("CustEnquiryView.xhtml");
+        } catch (IOException ex) {
+
+        }
+
     }
 
     private boolean creatEnquiry(ws.CustEnquiry enquiry) {
@@ -138,13 +150,7 @@ public class CustSupportMB  implements Serializable {
         this.content = content;
     }
 
-    private java.util.List<ws.CustEnquiry> getEnquiry() {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        ws.CustSupportWS port = service.getCustSupportWSPort();
-        return port.getEnquiry();
-    }
-
+ 
     /**
      * @return the enquiryList
      */
@@ -173,8 +179,6 @@ public class CustSupportMB  implements Serializable {
         this.activeEnquiry = activeEnquiry;
     }
 
-   
-
     /**
      * @return the response
      */
@@ -188,5 +192,23 @@ public class CustSupportMB  implements Serializable {
     public void setResponse(String response) {
         this.response = response;
     }
+
+    private boolean sendResponse(java.lang.Long id, java.lang.String response) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        ws.CustSupportWS port = service.getCustSupportWSPort();
+        return port.sendResponse(id, response);
+    }
+
+    private java.util.List<ws.CustEnquiry> getNewEnquiry() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        ws.CustSupportWS port = service.getCustSupportWSPort();
+        return port.getNewEnquiry();
+    }
+
+   
+
+  
 
 }
