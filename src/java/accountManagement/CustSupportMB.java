@@ -39,6 +39,7 @@ public class CustSupportMB implements Serializable {
     public void init() {
 
         setEnquiryList(getNewEnquiry());
+        this.setEnquiryListReplied(this.getRepliedEnquiry());
     }
 
     private String email;
@@ -47,6 +48,7 @@ public class CustSupportMB implements Serializable {
     private List<CustEnquiry> enquiryList = new ArrayList<>();
     private CustEnquiry activeEnquiry;
     private String response;
+    private List<CustEnquiry> enquiryListReplied = new ArrayList<>();
 
     public void askEnquiry() {
         CustEnquiry enquiry = new CustEnquiry();
@@ -58,16 +60,16 @@ public class CustSupportMB implements Serializable {
         if (creatEnquiry(enquiry)) {
             //update table of enquiry
             setEnquiryList(getNewEnquiry());
-            
+            this.setEnquiryListReplied(this.getRepliedEnquiry());
+
             this.setEmail(null);
             this.setSubject(null);
             this.setContent(null);
-            
+
             FacesMessage msg;
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Enquiry Sent Successfully", "You have successfully created an enquiry, we will get back to you soon");
             FacesContext.getCurrentInstance().addMessage(null, msg);
-            
-            
+
         } else {
             FacesMessage msg;
             msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fail", "Failed to create enquiry, please try again later");
@@ -79,9 +81,34 @@ public class CustSupportMB implements Serializable {
 
     public void reply(CustEnquiry enquiry) {
         this.setActiveEnquiry(enquiry);
-        System.out.println(activeEnquiry.getContent());
+
+        setEnquiryList(getNewEnquiry());
+        this.setEnquiryListReplied(this.getRepliedEnquiry());
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("CustEnquiryReply.xhtml");
+        } catch (IOException ex) {
+
+        }
+
+    }
+
+    public void view(CustEnquiry enquiry) {
+        setEnquiryList(getNewEnquiry());
+        this.setEnquiryListReplied(this.getRepliedEnquiry());
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("CustEnquiryViewReply.xhtml");
+        } catch (IOException ex) {
+
+        }
+
+    }
+
+    public void back() {
+
+        setEnquiryList(getNewEnquiry());
+        this.setEnquiryListReplied(this.getRepliedEnquiry());
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("CustEnquiryViewReplied.xhtml");
         } catch (IOException ex) {
 
         }
@@ -92,6 +119,9 @@ public class CustSupportMB implements Serializable {
 
         activeEnquiry.setReply(response);
         sendResponse(activeEnquiry.getId(), activeEnquiry.getReply());
+
+        setEnquiryList(getNewEnquiry());
+        this.setEnquiryListReplied(this.getRepliedEnquiry());
 
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("CustEnquiryView.xhtml");
@@ -150,7 +180,6 @@ public class CustSupportMB implements Serializable {
         this.content = content;
     }
 
- 
     /**
      * @return the enquiryList
      */
@@ -207,8 +236,25 @@ public class CustSupportMB implements Serializable {
         return port.getNewEnquiry();
     }
 
-   
+    /**
+     * @return the enquiryListReplied
+     */
+    public List<CustEnquiry> getEnquiryListReplied() {
+        return enquiryListReplied;
+    }
 
-  
+    /**
+     * @param enquiryListReplied the enquiryListReplied to set
+     */
+    public void setEnquiryListReplied(List<CustEnquiry> enquiryListReplied) {
+        this.enquiryListReplied = enquiryListReplied;
+    }
+
+    private java.util.List<ws.CustEnquiry> getRepliedEnquiry() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        ws.CustSupportWS port = service.getCustSupportWSPort();
+        return port.getRepliedEnquiry();
+    }
 
 }

@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
         <script
             src="http://maps.googleapis.com/maps/api/js"
-          >
+            >
         </script>
 
         <script>
@@ -49,7 +49,7 @@
             function calcRoute() {
                 var start = document.getElementById('start').value;
                 var end = document.getElementById('end').value;
-                
+
                 var request = {
                     origin: start,
                     destination: end,
@@ -66,28 +66,42 @@
 
         </script>
     </head>
+    <ui:composition template="./../templates/StoreTemplate.xhtml">
+        <ui:param name="pageName" value="Admin Management" />
 
-    <body>
-        
-        <div id="panel">
-    <b>Start: </b>
-    <select id="start" onchange="calcRoute();">
-      <option value="3155 Commonwealth Avenue West Singapore 129588">Clementi</option>
-      <option value="1 Vista Exchange Green Singapore 138617">Buona Vista</option>
-      <option value=" 54 Lavender Street, 338712">Lavender</option>
-      <option value="252 North Bridge Road Singapore 179103">Raffles Place</option>
-      
-    </select>
-    <b>End: </b>
-    <select id="end" onchange="calcRoute();">
-      <option value="2 Orchard Turn Singapore 238801">Store A</option>
-      <option value="200 Victoria Street Singapore 188021">Store 2</option>
-      
-    </select>
-    </div>
-    <div id="map-canvas"></div>
-        <div id="googleMap" style="width:500px;height:380px;"></div>
+        <ui:define name="more-imports">
+            <ui:insert>
+            </ui:insert>
+        </ui:define>
 
-    </body>
+        <ui:define name="left">
+            <h3 style="text-align: left">Contact Us :</h3>
+            <h4 style="text-align: left">2 Orchard Turn Singapore 238801</h4>
+            <h4 style="text-align: left"> 200 Victoria Street Singapore 188021</h4>
+            <h4 style="text-align: left"> Tel:98765432</h4>
+
+
+        </ui:define>
+        <ui:define name="right">
+
+            <div id="panel">
+                <b>Start: </b>
+                <select id="start" onchange="calcRoute();">
+                    <option value="3155 Commonwealth Avenue West Singapore 129588">Clementi</option>
+                    <option value="1 Vista Exchange Green Singapore 138617">Buona Vista</option>
+                    <option value=" 54 Lavender Street, 338712">Lavender</option>
+                    <option value="252 North Bridge Road Singapore 179103">Raffles Place</option>
+
+                </select>
+                <b>End: </b>
+                <select id="end" onchange="calcRoute();">
+                    <option value="2 Orchard Turn Singapore 238801">Store A</option>
+                    <option value="200 Victoria Street Singapore 188021">Store 2</option>
+
+                </select>
+            </div>
+            <div id="map-canvas"></div>
+            <div id="googleMap" style="width:700px;height:380px;"></div>
+        </ui:define>
+    </ui:composition>
 </html>
-

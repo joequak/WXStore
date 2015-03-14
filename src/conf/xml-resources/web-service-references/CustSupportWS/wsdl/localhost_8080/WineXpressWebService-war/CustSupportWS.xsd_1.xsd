@@ -16,6 +16,10 @@
 
 <xs:element name="getRepliedEnquiryResponse" type="tns:getRepliedEnquiryResponse"/>
 
+<xs:element name="getRepliedEnquiry" type="tns:getRepliedEnquiry"/>
+
+<xs:element name="getRepliedEnquiryResponse" type="tns:getRepliedEnquiryResponse"/>
+
 <xs:element name="sendEmail" type="tns:sendEmail"/>
 
 <xs:element name="sendEmailResponse" type="tns:sendEmailResponse"/>

@@ -44,31 +44,7 @@
                     </div>
                 </div>
             </h:panelGroup>
-            <script type="text/javascript">
-                PrimeFaces.validator['custom.emailValidator'] = {
-                    pattern: /\S+@\S+/,
-                    validate: function(element, value) {
-                        //use element.data() to access validation metadata, in this case there is none.
-                        if (!this.pattern.test(value)) {
-                            throw {
-                                summary: 'Validation Error',
-                                detail: value + ' is not a valid email.'
-                            }
-                        }
-                    }
-                };
-
-            </script>
-            <c:if test="${not empty param.isLocked}">
-                <c:if test="${param.isLocked == 'yes'}">
-                    <script type="text/javascript">
-                        $(document).ready(function() {
-                            userLocked();
-                        });
-                    </script>
-                </c:if>
-            </c:if>
-
+          
         </ui:define>
 
     </ui:composition>
