@@ -9,7 +9,7 @@
     <body>
 
         <ui:composition template="./../templates/mainTemplate.xhtml">
-        <ui:param name="pageName" value="Feed Back" />
+            <ui:param name="pageName" value="Feed Back" />
 
             <ui:define name="content">
                 <h:form id="formCreateEnquiry">
@@ -39,10 +39,10 @@
                                 </p:inputText>
                             </td>
                         </tr>
-                         <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
                         <tr>
                             <td style="text-align: right; vertical-align: top">
                                 <p:outputLabel for="content" style="font-weight: bold" value="Please enter your query: " />
@@ -54,7 +54,9 @@
                         </tr>
                     </table>
                     <br></br>
-                    <p:commandButton  value="Submit" actionListener="#{custSupportMB.askEnquiry()}" ajax="true"/>
+                    <p:commandButton  value="Submit" actionListener="#{custSupportMB.askEnquiry()}" update="content email subject" ajax="true">
+                        
+                    </p:commandButton>
                     <br></br>
                 </h:form>
 
