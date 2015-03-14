@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link href="default.css" rel="stylesheet" type="text/css" /> 
+    </h:head>
+    <h:body> 
+        <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="ProductWorkspace.xhtml"/>      
+        <p:breadCrumb>
+            <p:menuitem value="Home" url="productWelcom.xhtml"/>
+        </p:breadCrumb>
+        <p:menubar>
+            <p:menuitem value="Add Product" url="productAdd.xhtml?i=1" icon="ui-icon-plus"/>
+            <p:menuitem value="Edit Product" url="productEdit.xhtml?i=1" icon="ui-icon-pencil"/>
+            <p:menuitem value="View Product" url="productView.xhtml?i=1" icon="ui-icon-search"/>
+        </p:menubar>
+        <h:form id="formMain">
+            <p:panel id="panel" header="Add New Product">
+                 <p:ajaxStatus style="width:20px;height:20px;">
+                        <f:facet name="start">
+                            <h:graphicImage value="/images/spinner.gif" />
+                        </f:facet>
+                        <f:facet name="complete">
+                            <h:outputText value="" />
+                        </f:facet>
+                    </p:ajaxStatus>
+                    <p:messages />
+                
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="furnitureName" style="font-weight: bolder" value="Product Name: "/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="true" label="Furniture Name" requiredMessage="a legal Product Name is required." id="furnitureName" value="#{productManagedBean.productName}">
+                                <f:validateLength minimum="1" maximum="200"/>
+                            </p:inputText>      
+                        </p:column>
+                        <p:column>
+                            <p:message for="furnitureName"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="furnitureName2" style="font-weight: bolder" value="Product Price(Double): "/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="true" label="Furniture Name" requiredMessage="a legal Price is required." id="furnitureName2" value="#{productManagedBean.productPrice}">
+                                <f:validateLength minimum="1" maximum="200"/>
+                            </p:inputText>      
+                        </p:column>
+                        <p:column>
+                            <p:message for="furnitureName2"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="furnitureName3" style="font-weight: bolder" value="Product cost(Double): "/>
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText required="true" label="Furniture Name" requiredMessage="a legal double value is required." id="furnitureName3" value="#{productManagedBean.productCost}">
+                                <f:validateLength minimum="1" maximum="1000"/>
+                            </p:inputText>      
+                        </p:column>
+                        <p:column>
+                            <p:message for="furnitureName3"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="furnitureName4" style="font-weight: bolder" value="Product Description: "/>
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText required="true" label="Furniture Name" requiredMessage="a legal WineDescrition is required." id="furnitureName4" value="#{productManagedBean.productDescription}">
+                                <f:validateLength minimum="1" maximum="1000"/>
+                            </p:inputText>      
+                        </p:column>
+                        <p:column>
+                            <p:message for="furnitureName4"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="p5" style="font-weight: bolder" value="Available Quantities(Integer): "/>
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText required="true" label="Furniture Name" requiredMessage="a legal Integer is required." id="p5" value="#{productManagedBean.productAQ}">
+                                <f:validateLength minimum="1" maximum="1000"/>
+                            </p:inputText>      
+                        </p:column>
+                        <p:column>
+                            <p:message for="p5"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="p6" style="font-weight: bolder" value="Upload a picture: "/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="false" label="Furniture Name"  id="p6" value="#{productManagedBean.productPicture}">
+                            </p:inputText>      
+                        </p:column>
+                        <p:column>
+                            <p:message for="p6"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="p7" style="font-weight: bolder" value="Discount rate(Integer): "/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="true" label="Furniture Name"  id="p7" value="#{productManagedBean.productDiscount}">
+                            </p:inputText>      
+                        </p:column>
+                        <p:column>
+                            <p:message for="p7"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="p8" style="font-weight: bolder" value="Volume: "/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="true" label="Furniture Name"  id="p8" value="#{productManagedBean.productVolume}">
+                            </p:inputText>      
+                        </p:column>
+                        <p:column>
+                            <p:message for="p8"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="p9" style="font-weight: bolder" value="Category: "/>
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="p9" value="#{productManagedBean.productCountry}" style="width:100%">
+                                <f:selectItems value="#{productManagedBean.countries}" var="country" itemLabel="#{country}" itemValue="#{country}" />
+                            </p:selectOneMenu>     
+                        </p:column>
+                        <p:column>
+                            <p:message for="p9"/>
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+                <p:commandButton id="btn" value="Save" update="panel" actionListener="#{productManagedBean.saveNewProduct}" ajax="true"/>
+
+            </p:panel>
+        </h:form>
+    </h:body>
+
+</html>
+

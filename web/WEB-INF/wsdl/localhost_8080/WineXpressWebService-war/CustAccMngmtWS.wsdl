@@ -4,18 +4,6 @@
 <xsd:import namespace="http://accountManagement.wx.com/" schemaLocation="http://localhost:8080/WineXpressWebService-war/CustAccMngmtWS?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="registerAsMember">
-<part name="parameters" element="tns:registerAsMember"/>
-</message>
-<message name="registerAsMemberResponse">
-<part name="parameters" element="tns:registerAsMemberResponse"/>
-</message>
-<message name="activateAccount">
-<part name="parameters" element="tns:activateAccount"/>
-</message>
-<message name="activateAccountResponse">
-<part name="parameters" element="tns:activateAccountResponse"/>
-</message>
 <message name="logInMember">
 <part name="parameters" element="tns:logInMember"/>
 </message>
@@ -27,6 +15,18 @@
 </message>
 <message name="logOutMemberResponse">
 <part name="parameters" element="tns:logOutMemberResponse"/>
+</message>
+<message name="registerAsMember">
+<part name="parameters" element="tns:registerAsMember"/>
+</message>
+<message name="registerAsMemberResponse">
+<part name="parameters" element="tns:registerAsMemberResponse"/>
+</message>
+<message name="activateAccount">
+<part name="parameters" element="tns:activateAccount"/>
+</message>
+<message name="activateAccountResponse">
+<part name="parameters" element="tns:activateAccountResponse"/>
 </message>
 <message name="viewAccInfoMember">
 <part name="parameters" element="tns:viewAccInfoMember"/>
@@ -53,14 +53,6 @@
 <part name="parameters" element="tns:viewPurchaseHistoryMemberResponse"/>
 </message>
 <portType name="CustAccMngmtWS">
-<operation name="registerAsMember">
-<input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/registerAsMemberRequest" message="tns:registerAsMember"/>
-<output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/registerAsMemberResponse" message="tns:registerAsMemberResponse"/>
-</operation>
-<operation name="activateAccount">
-<input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/activateAccountRequest" message="tns:activateAccount"/>
-<output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/activateAccountResponse" message="tns:activateAccountResponse"/>
-</operation>
 <operation name="logInMember">
 <input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/logInMemberRequest" message="tns:logInMember"/>
 <output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/logInMemberResponse" message="tns:logInMemberResponse"/>
@@ -68,6 +60,14 @@
 <operation name="logOutMember">
 <input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/logOutMemberRequest" message="tns:logOutMember"/>
 <output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/logOutMemberResponse" message="tns:logOutMemberResponse"/>
+</operation>
+<operation name="registerAsMember">
+<input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/registerAsMemberRequest" message="tns:registerAsMember"/>
+<output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/registerAsMemberResponse" message="tns:registerAsMemberResponse"/>
+</operation>
+<operation name="activateAccount">
+<input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/activateAccountRequest" message="tns:activateAccount"/>
+<output wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/activateAccountResponse" message="tns:activateAccountResponse"/>
 </operation>
 <operation name="viewAccInfoMember">
 <input wsam:Action="http://accountManagement.wx.com/CustAccMngmtWS/viewAccInfoMemberRequest" message="tns:viewAccInfoMember"/>
@@ -88,24 +88,6 @@
 </portType>
 <binding name="CustAccMngmtWSPortBinding" type="tns:CustAccMngmtWS">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="registerAsMember">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="activateAccount">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="logInMember">
 <soap:operation soapAction=""/>
 <input>
@@ -116,6 +98,24 @@
 </output>
 </operation>
 <operation name="logOutMember">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="registerAsMember">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="activateAccount">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
