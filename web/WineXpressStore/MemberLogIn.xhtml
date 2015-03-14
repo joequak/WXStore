@@ -26,9 +26,9 @@
                         <p:password id="password" value="#{commonInfraMB.password}" required="true" label="Password" />    
                     </h:panelGrid>
                     <br></br>
-                    <h:commandButton id="loginBtn" value="Login" action="#{commonInfraMB.adminLogIn(actionEvent)}" style="" /> 
+                    <h:commandButton id="loginBtn" value="Login" action="#{commonInfraMB.memberLogIn(actionEvent)}" style="" /> 
                     <br></br>
-                    <h:link id="forgetPass" value="Forget Password? Click here" outcome="forgetPassword.xhtml"  style="font-size:12px" />  
+                    <h:link id="forgetPass" value="Forget Password? Click here" outcome="/WineXpressStore/MemberForgetPassword.xhtml"  style="font-size:12px" />  
                 </p:panel>
                 <br></br>
                 <br></br>

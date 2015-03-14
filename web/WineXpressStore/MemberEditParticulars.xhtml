@@ -18,6 +18,7 @@
                             <td>
                                 <p:panel header="Edit Particulars">
                                     <table width="100%" cellpadding="5" cellspacing="0">
+                                        <tbody style="text-align: left">
                                         <tr>
                                             <td width="20%">
                                                 <p:spacer></p:spacer>
@@ -45,7 +46,9 @@
                                                 First Name:  
                                             </td>
                                             <td width="65%">
-                                                #{accMngmtMB.outCust.fistName} <p:inputText id="firstName" value="#{accMngmtMB.newCust.fistName}" required="true" requiredMessage="Please input your First Name"/>
+                                                <p:inputText id="firstName" value="#{accMngmtMB.newCust.fistName}" required="true" 
+                                                             requiredMessage="Please input your First Name"
+                                                             placeholder="#{accMngmtMB.outCust.fistName}"/>
                                             </td>
                                             <td width="5%">
                                                 <p:spacer></p:spacer>
@@ -56,12 +59,14 @@
                                                 Last Name:  
                                             </td>
                                             <td width="65%">
-                                                #{accMngmtMB.outCust.lastName} <p:inputText id="lastName" value="#{accMngmtMB.newCust.lastName}" required="true" requiredMessage="Please input your Last Name"/>
+                                                <p:inputText id="lastName" value="#{accMngmtMB.newCust.lastName}" required="true" 
+                                                             requiredMessage="Please input your Last Name" placeholder="#{accMngmtMB.outCust.lastName}"/>
                                             </td>
                                             <td width="5%">
                                                 <p:spacer></p:spacer>
                                             </td>
                                         </tr>
+                                        </tbody>
                                     </table>
                                     <p:commandButton id="saveEdit" value="Save Changes" actionListener="#{accMngmtMB.editParticularsMember(actionEvent)}"  
                                                      style="margin-top: 10px; margin-right:20px;" />

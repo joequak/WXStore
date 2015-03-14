@@ -94,29 +94,45 @@
                             <p:dialog header="Member Info" widgetVar="memberDialog" 
                                       modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                 <p:outputPanel id="memberDetail" style="text-align:center;">
-                                    <p:panelGrid  columns="2" rendered="#{not empty accMngmtMB.selectedCustomer}" columnClasses="label,value">
-                                        <h:outputText value="Id:" />
-                                        <h:outputText value="#{accMngmtMB.selectedCustomer.id}" />
-
-                                        <h:outputText value="Email" />
-                                        <h:outputText value="#{accMngmtMB.selectedCustomer.email}" />
-
-                                        <h:outputText value="First Name" />
-                                        <h:outputText value="#{accMngmtMB.selectedCustomer.fistName}"/>
-
-                                        <h:outputText value="Last Name" />
-                                        <h:outputText value="#{accMngmtMB.selectedCustomer.lastName}" />
-                                    </p:panelGrid>
+                                    <table>
+                                        <tbody style="text-align: left">
+                                            <tr>
+                                                <td>
+                                                    ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </td>
+                                                <td>
+                                                    #{accMngmtMB.selectedCustomer.id}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Email: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </td>
+                                                <td>
+                                                    #{accMngmtMB.selectedCustomer.email}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </td>
+                                                <td>
+                                                    #{accMngmtMB.selectedCustomer.fistName} #{accMngmtMB.selectedCustomer.lastName}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                  
                                     <p:commandButton value="Block" title="Block" 
                                                      actionListener="#{accMngmtMB.blockCust(actionEvent)}"
                                                      rendered="#{accMngmtMB.selectedCustomer.status == true}"
-                                                     style="margin-top: 5px">
+                                                     style="margin-top: 15px">
                                         <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
                                     </p:commandButton>
                                     <p:commandButton value="Reactivate" title="Reactivate" 
                                                      actionListener="#{accMngmtMB.activateAccount(actionEvent)}" 
                                                      rendered="#{accMngmtMB.selectedCustomer.status == false}"
-                                                     style="margin-top: 5px">
+                                                     style="margin-top: 15px">
                                         <f:setPropertyActionListener value="#{member}" target="#{accMngmtMB.selectedCustomer}" />
                                     </p:commandButton>
                                 </p:outputPanel>
@@ -134,7 +150,7 @@
                                                  sortBy="#{pHist.ordDate}" sortOrder="descending" 
                                                  style="margin-bottom:20px" >
                                         <f:facet name="header">
-                                            List of Purchases
+                                            #{accMngmtMB.selectedCustomer.fistName}'s List of Purchases
                                         </f:facet>
                                         <p:column headerText="Id" 
                                                   sortBy="#{pHist.id}"

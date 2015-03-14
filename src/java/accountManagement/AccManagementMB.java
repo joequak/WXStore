@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.xml.ws.WebServiceRef;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
+import ws.CustSupportWS_Service;
 import wx.accMngmtWS.AdminAccMngmtWS_Service;
 import wx.accMngmtWS.AdminUsr;
 import wx.custAccMngmtWS.CustAccMngmtWS_Service;
@@ -36,6 +37,8 @@ import wx.custAccMngmtWS.OrderDetail;
 @ManagedBean (name = "accMngmtMB")
 @ViewScoped
 public class AccManagementMB {
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/WineXpressWebService-war/CustSupportWS.wsdl")
+    private CustSupportWS_Service service_2;
     
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/WineXpressWebService-war/CustAccMngmtWS.wsdl")
     private CustAccMngmtWS_Service service_1;
@@ -69,6 +72,8 @@ public class AccManagementMB {
     private String toCancel;
     //Selected Customer
     private wx.accMngmtWS.Customer selectedCustomer;
+    //To resetpassword
+    private String toResetPassword;
     
     //Output variables from Web Services for UI
     //View Profile
@@ -203,6 +208,24 @@ public class AccManagementMB {
         }
     }
     
+    public void resetPasswordAdmin (ActionEvent actionEvent) throws GeneralSecurityException, UnsupportedEncodingException, IOException {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        ws.CustSupportWS port_2 = service_2.getCustSupportWSPort();
+        String resetPassword = port_2.generatePassword();
+        
+        wx.accMngmtWS.AdminAccMngmtWS port = service.getAdminAccMngmtWSPort();
+        if (port.resetPwAdmin(this.getToResetPassword(), encrypt(resetPassword))) {
+            String emailSubject = "WineXpress Admin Password Reset";
+            String emailContent = "Hi, \n\n Your Password has been reset to " + resetPassword + ".\n\n Thank you. \n\n From,\nWineXpress Admin Team. ";
+            port_2.sendEmail(this.getToResetPassword(), emailSubject, emailContent);
+            infoMsg("Password Reset. Please check your email.");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../AdminPortal/AdminLogIn.xhtml");
+        } else {
+            errorMsg("Reset Password Failed. Email provided does not exist.");
+        }
+    }
+    
     //Customer Self account methods
     public void changePwMember(ActionEvent actionEvent) throws IOException, GeneralSecurityException {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
@@ -241,6 +264,24 @@ public class AccManagementMB {
         // If the calling of port operations may lead to race condition some synchronization is required.
         wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
         this.setCustPurchaseHistory(port.viewPurchaseHistoryMember(this.getLogInCust()));
+    }
+    
+    public void resetPasswordMember (ActionEvent actionEvent) throws GeneralSecurityException, UnsupportedEncodingException, IOException {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        ws.CustSupportWS port_2 = service_2.getCustSupportWSPort();
+        String resetPassword = port_2.generatePassword();
+        
+        wx.custAccMngmtWS.CustAccMngmtWS port_1 = service_1.getCustAccMngmtWSPort();
+        if (port_1.resetPwMember(this.getToResetPassword(), encrypt(resetPassword))) {
+            String emailSubject = "WineXpress Password Reset";
+            String emailContent = "Hi, \n\n Your Password has been reset to " + resetPassword + ".\n\n Thank you. \n\n From,\nWineXpress Admin Team. ";
+            port_2.sendEmail(this.getToResetPassword(), emailSubject, emailContent);
+            infoMsg("Password Reset. Please check your email.");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../WineXpressStore/MemberLogIn.xhtml");
+        } else {
+            errorMsg("Reset Password Failed. Email provided does not exist.");
+        }
     }
     
     //Support MB methods
@@ -533,5 +574,18 @@ public class AccManagementMB {
     public void setSelectedCustomer(wx.accMngmtWS.Customer selectedCustomer) {
         this.selectedCustomer = selectedCustomer;
     }
-    
+
+    /**
+     * @return the toResetPassword
+     */
+    public String getToResetPassword() {
+        return toResetPassword;
+    }
+
+    /**
+     * @param toResetPassword the toResetPassword to set
+     */
+    public void setToResetPassword(String toResetPassword) {
+        this.toResetPassword = toResetPassword;
+    }   
 }

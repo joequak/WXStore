@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://accountManagement.wx.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://accountManagement.wx.com/">
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://accountManagement.wx.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://accountManagement.wx.com/">
 
 <xs:element name="activateAccount" type="tns:activateAccount"/>
 
@@ -24,6 +24,10 @@
 
 <xs:element name="registerAsMemberResponse" type="tns:registerAsMemberResponse"/>
 
+<xs:element name="resetPwMember" type="tns:resetPwMember"/>
+
+<xs:element name="resetPwMemberResponse" type="tns:resetPwMemberResponse"/>
+
 <xs:element name="viewAccInfoMember" type="tns:viewAccInfoMember"/>
 
 <xs:element name="viewAccInfoMemberResponse" type="tns:viewAccInfoMemberResponse"/>
@@ -32,9 +36,8 @@
 
 <xs:element name="viewPurchaseHistoryMemberResponse" type="tns:viewPurchaseHistoryMemberResponse"/>
 
-<xs:complexType name="editParticularsMember">
+<xs:complexType name="registerAsMember">
 <xs:sequence>
-<xs:element name="custID" type="xs:long"/>
 <xs:element name="newCust" type="tns:customer" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
@@ -224,36 +227,9 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="editParticularsMemberResponse">
+<xs:complexType name="registerAsMemberResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="changePwMember">
-<xs:sequence>
-<xs:element name="custID" type="xs:long"/>
-<xs:element name="oldPW" type="xs:string" minOccurs="0"/>
-<xs:element name="newPW" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="changePwMemberResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="logInMember">
-<xs:sequence>
-<xs:element name="emailAdd" type="xs:string" minOccurs="0"/>
-<xs:element name="password" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="logInMemberResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:long"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -281,18 +257,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="registerAsMember">
-<xs:sequence>
-<xs:element name="newCust" type="tns:customer" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="registerAsMemberResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="viewAccInfoMember">
 <xs:sequence>
 <xs:element name="custID" type="xs:long"/>
@@ -305,6 +269,33 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="changePwMember">
+<xs:sequence>
+<xs:element name="custID" type="xs:long"/>
+<xs:element name="oldPW" type="xs:string" minOccurs="0"/>
+<xs:element name="newPW" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="changePwMemberResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="editParticularsMember">
+<xs:sequence>
+<xs:element name="custID" type="xs:long"/>
+<xs:element name="newCust" type="tns:customer" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="editParticularsMemberResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="viewPurchaseHistoryMember">
 <xs:sequence>
 <xs:element name="custID" type="xs:long"/>
@@ -314,6 +305,32 @@
 <xs:complexType name="viewPurchaseHistoryMemberResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:orderDetail" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="logInMember">
+<xs:sequence>
+<xs:element name="emailAdd" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="logInMemberResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resetPwMember">
+<xs:sequence>
+<xs:element name="emailAdd" type="xs:string" minOccurs="0"/>
+<xs:element name="rstPW" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resetPwMemberResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

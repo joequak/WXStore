@@ -21,6 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.xml.ws.WebServiceRef;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
+import ws.CustSupportWS_Service;
 import wx.accMngmtWS.AdminAccMngmtWS_Service;
 import wx.accMngmtWS.AdminUsr;
 import wx.custAccMngmtWS.CustAccMngmtWS_Service;
@@ -33,6 +34,8 @@ import wx.custAccMngmtWS.Customer;
 @ManagedBean (name = "accRegistMB")
 @ViewScoped
 public class AccRegistMB {
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/WineXpressWebService-war/CustSupportWS.wsdl")
+    private CustSupportWS_Service service_2;
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/WineXpressWebService-war/CustAccMngmtWS.wsdl")
     private CustAccMngmtWS_Service service_1;
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/WineXpressWebService-war/AdminAccMngmtWS.wsdl")
@@ -84,10 +87,16 @@ public class AccRegistMB {
         wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
         this.getToRegist().setPassword(encrypt(this.getToRegistPassword()));
         if (port.registerAsMember(this.getToRegist())) {
-            infoMsg("Member Registered");
+            ws.CustSupportWS port_2 = service_2.getCustSupportWSPort();
+            String emailSubject = "WineXpress Member Registration";
+            String emailContent = "Hi " + this.getToRegist().getFistName() + ",\n\n Welcome to WineXpress.com. \n\n Please click the following link to activate your account."
+                    + "\n\n http://localhost:8080/WXStore/faces/WineXpressStore/VisitorActivateAccount.xhtml?email=" + this.getToRegist().getEmail() + "\n\nThank you for joining us."
+                    + "\n\n From. \n WineXpress CX Team.";
+            port_2.sendEmail(this.getToRegist().getEmail(), emailSubject, emailContent);
+            infoMsg("Member Registered.");
             FacesContext.getCurrentInstance().getExternalContext().redirect("../WineXpressStore/VisitorRegisterSuccess.xhtml");
         } else {
-            errorMsg("Member Registration Fail");
+            errorMsg("Member Registration Fail. Email address has been taken.");
         }
     }
     
