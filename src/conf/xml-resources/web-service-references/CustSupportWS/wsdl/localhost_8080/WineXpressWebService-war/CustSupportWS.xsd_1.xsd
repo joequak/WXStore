@@ -12,6 +12,10 @@
 
 <xs:element name="getNewEnquiryResponse" type="tns:getNewEnquiryResponse"/>
 
+<xs:element name="getRepliedEnquiry" type="tns:getRepliedEnquiry"/>
+
+<xs:element name="getRepliedEnquiryResponse" type="tns:getRepliedEnquiryResponse"/>
+
 <xs:element name="sendEmail" type="tns:sendEmail"/>
 
 <xs:element name="sendEmailResponse" type="tns:sendEmailResponse"/>
@@ -57,6 +61,16 @@
 <xs:complexType name="creatEnquiryResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getRepliedEnquiry">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getRepliedEnquiryResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:custEnquiry" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
