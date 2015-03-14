@@ -34,6 +34,12 @@
 <message name="generatePasswordResponse">
 <part name="parameters" element="tns:generatePasswordResponse"/>
 </message>
+<message name="getRepliedEnquiry">
+<part name="parameters" element="tns:getRepliedEnquiry"/>
+</message>
+<message name="getRepliedEnquiryResponse">
+<part name="parameters" element="tns:getRepliedEnquiryResponse"/>
+</message>
 <portType name="CustSupportWS">
 <operation name="sendResponse">
 <input wsam:Action="http://WS/CustSupportWS/sendResponseRequest" message="tns:sendResponse"/>
@@ -54,6 +60,10 @@
 <operation name="generatePassword">
 <input wsam:Action="http://WS/CustSupportWS/generatePasswordRequest" message="tns:generatePassword"/>
 <output wsam:Action="http://WS/CustSupportWS/generatePasswordResponse" message="tns:generatePasswordResponse"/>
+</operation>
+<operation name="getRepliedEnquiry">
+<input wsam:Action="http://WS/CustSupportWS/getRepliedEnquiryRequest" message="tns:getRepliedEnquiry"/>
+<output wsam:Action="http://WS/CustSupportWS/getRepliedEnquiryResponse" message="tns:getRepliedEnquiryResponse"/>
 </operation>
 </portType>
 <binding name="CustSupportWSPortBinding" type="tns:CustSupportWS">
@@ -95,6 +105,15 @@
 </output>
 </operation>
 <operation name="generatePassword">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getRepliedEnquiry">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

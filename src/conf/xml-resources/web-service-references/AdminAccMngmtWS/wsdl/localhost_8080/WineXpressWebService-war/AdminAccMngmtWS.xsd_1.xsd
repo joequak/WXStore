@@ -36,6 +36,10 @@
 
 <xs:element name="reActivateAdminResponse" type="tns:reActivateAdminResponse"/>
 
+<xs:element name="resetPwAdmin" type="tns:resetPwAdmin"/>
+
+<xs:element name="resetPwAdminResponse" type="tns:resetPwAdminResponse"/>
+
 <xs:element name="viewAccInfoAdmin" type="tns:viewAccInfoAdmin"/>
 
 <xs:element name="viewAccInfoAdminResponse" type="tns:viewAccInfoAdminResponse"/>
@@ -289,6 +293,19 @@
 </xs:complexType>
 
 <xs:complexType name="changePwAdminResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resetPwAdmin">
+<xs:sequence>
+<xs:element name="emailAdd" type="xs:string" minOccurs="0"/>
+<xs:element name="rstPW" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resetPwAdminResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
 </xs:sequence>

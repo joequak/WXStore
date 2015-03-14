@@ -4,6 +4,12 @@
 <xsd:import namespace="http://accountManagement.wx.com/" schemaLocation="http://localhost:8080/WineXpressWebService-war/AdminAccMngmtWS?xsd=1"/>
 </xsd:schema>
 </types>
+<message name="resetPwAdmin">
+<part name="parameters" element="tns:resetPwAdmin"/>
+</message>
+<message name="resetPwAdminResponse">
+<part name="parameters" element="tns:resetPwAdminResponse"/>
+</message>
 <message name="editParticularsAdmin">
 <part name="parameters" element="tns:editParticularsAdmin"/>
 </message>
@@ -28,6 +34,12 @@
 <message name="logOutAdminResponse">
 <part name="parameters" element="tns:logOutAdminResponse"/>
 </message>
+<message name="cancelAccount">
+<part name="parameters" element="tns:cancelAccount"/>
+</message>
+<message name="cancelAccountResponse">
+<part name="parameters" element="tns:cancelAccountResponse"/>
+</message>
 <message name="viewAccInfoAdmin">
 <part name="parameters" element="tns:viewAccInfoAdmin"/>
 </message>
@@ -39,12 +51,6 @@
 </message>
 <message name="changePwAdminResponse">
 <part name="parameters" element="tns:changePwAdminResponse"/>
-</message>
-<message name="cancelAccount">
-<part name="parameters" element="tns:cancelAccount"/>
-</message>
-<message name="cancelAccountResponse">
-<part name="parameters" element="tns:cancelAccountResponse"/>
 </message>
 <message name="getAllCust">
 <part name="parameters" element="tns:getAllCust"/>
@@ -71,6 +77,10 @@
 <part name="parameters" element="tns:reActivateAdminResponse"/>
 </message>
 <portType name="AdminAccMngmtWS">
+<operation name="resetPwAdmin">
+<input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/resetPwAdminRequest" message="tns:resetPwAdmin"/>
+<output wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/resetPwAdminResponse" message="tns:resetPwAdminResponse"/>
+</operation>
 <operation name="editParticularsAdmin">
 <input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/editParticularsAdminRequest" message="tns:editParticularsAdmin"/>
 <output wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/editParticularsAdminResponse" message="tns:editParticularsAdminResponse"/>
@@ -87,6 +97,10 @@
 <input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/logOutAdminRequest" message="tns:logOutAdmin"/>
 <output wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/logOutAdminResponse" message="tns:logOutAdminResponse"/>
 </operation>
+<operation name="cancelAccount">
+<input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/cancelAccountRequest" message="tns:cancelAccount"/>
+<output wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/cancelAccountResponse" message="tns:cancelAccountResponse"/>
+</operation>
 <operation name="viewAccInfoAdmin">
 <input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/viewAccInfoAdminRequest" message="tns:viewAccInfoAdmin"/>
 <output wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/viewAccInfoAdminResponse" message="tns:viewAccInfoAdminResponse"/>
@@ -94,10 +108,6 @@
 <operation name="changePwAdmin">
 <input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/changePwAdminRequest" message="tns:changePwAdmin"/>
 <output wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/changePwAdminResponse" message="tns:changePwAdminResponse"/>
-</operation>
-<operation name="cancelAccount">
-<input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/cancelAccountRequest" message="tns:cancelAccount"/>
-<output wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/cancelAccountResponse" message="tns:cancelAccountResponse"/>
 </operation>
 <operation name="getAllCust">
 <input wsam:Action="http://accountManagement.wx.com/AdminAccMngmtWS/getAllCustRequest" message="tns:getAllCust"/>
@@ -118,6 +128,15 @@
 </portType>
 <binding name="AdminAccMngmtWSPortBinding" type="tns:AdminAccMngmtWS">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="resetPwAdmin">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="editParticularsAdmin">
 <soap:operation soapAction=""/>
 <input>
@@ -154,6 +173,15 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="cancelAccount">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="viewAccInfoAdmin">
 <soap:operation soapAction=""/>
 <input>
@@ -164,15 +192,6 @@
 </output>
 </operation>
 <operation name="changePwAdmin">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="cancelAccount">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
