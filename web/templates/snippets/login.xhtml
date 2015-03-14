@@ -15,7 +15,7 @@
                         <a href="MemberLogIn.xhtml" >Login</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </c:if>
                     <c:if test="#{commonInfraMB.logInCust!=-1}">
-                        <a href="#" >#{accMngmtMB.outCust.fistName}'s Account</a>&nbsp;| 
+                        <a href="MemberViewProfile.xhtml" >#{accMngmtMB.outCust.fistName}'s Account</a>&nbsp;| 
                         <a href="#" >Cart</a>&nbsp;| 
                         <a href="#" >Wish List</a>&nbsp;| 
                         <p:commandLink actionListener="#{commonInfraMB.custLogout(actionEvent)}" value="Log out"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
