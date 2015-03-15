@@ -7,55 +7,48 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="./../templates/StoreTemplate.xhtml">
-        <ui:param name="pageName" value="Store" />
+        <ui:param name="pageName" value="Admin Management" />
 
         <ui:define name="more-imports">
             <ui:insert>
             </ui:insert>
         </ui:define>
-        <ui:define name="content">
-            <div class="container left-container">
-                <ui:insert name="left">
-                    <h:form id="sidNav">
-                        <p:tree value="#{productManagedBean.root}" var="myNode" 
-                                selectionMode="single" selection="#{productManagedBean.selectedNode}">
-                            <p:ajax event="select"  listener="#{treeEventsView.onNodeSelect}" update="cotent"/>
-                            <p:ajax event="unselect" listener="#{treeEventsView.onNodeUnselect}" update="cotent" />
 
-                            <p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
-                                <h:outputText value="#{myNode}"/>
-                            </p:treeNode>                          
-                        </p:tree>
-                    </h:form> 
-                </ui:insert>
-            </div> 
-            <div class="container right-container">
-                <ui:define name="right">
-                    <h:form id="cotent">
-                        <p:dataTable var="product" value="#{productManagedBean.nonFilteredProducts}" 
-                                     selectionMode="single" selection="#{productManagedBean.selectedProduct}" rowKey="#{product.id}"
-                                     emptyMessage="No products found with given categories" widgetVar="productsTable" 
-                                     filteredValue="#{productManagedBean.filteredProducts}">
-                            <p:ajax event="rowSelect" listener="#{dtSelectionView.onRowSelect}" />
-                            <p:column headerText="">
-                                <p:graphicImage name="demo/images/car/#{car.brand}-big.gif" /> 
-                            </p:column>
-                            <p:column headerText="Product Name" filterBy="#{product.name}" sortBy="#{product.name}" filterMatchMode="contains" >
-                                <h:outputText value="#{product.name}" />
-                            </p:column> 
-                            <p:column headerText="Product Description" filterBy="#{product.description}"  filterMatchMode="contains" >
-                                <h:outputText value="#{product.description}" />
-                            </p:column>
-                            <p:column headerText="Product Price" filterBy="#{product.price}" sortBy="#{product.description}" filterFunction="#{productManagedBean.filterByPrice}" >
-                                <h:outputText value="#{product.price}" />
-                            </p:column> 
-                        </p:dataTable>
+        <ui:define name="left">
 
-                    </h:form>
+            <h:form id="sidNav">
+                <p:tree style="width:250px; text-align: left"
+                    value="#{displayProductManagBean.root}" var="myNode" 
+                        selectionMode="single" selection="#{displayProductManagBean.selectedNode}">
+                    
+                    <p:ajax event="select"  listener="#{displayProductManagBean.onNodeSelect}" />
+                    <p:ajax event="unselect" listener="#{displayProductManagBean.onNodeUnselect}" />
 
-                </ui:define>
-            </div>
+                    <p:treeNode>
+                        <h:outputText value="#{myNode}"/>
+                    </p:treeNode>                          
+                </p:tree>
+            </h:form> 
+        </ui:define>
+        <ui:define name="right">
+            <h:form>
+                <p:dataTable id="productTable" style="width:700px;" 
+                             var="product" value="#{displayProductManagBean.allProducts}" 
+                             selectionMode="single" selection="#{displayProductManagBean.selectedProduct}" rowKey="#{product.id}"
+                             emptyMessage="No products found with given categories" widgetVar="productsTable" >
+                    <p:ajax event="rowSelect" listener="#{displayProductManagBean.onRowSelect}" />
+                    <p:column headerText="" width="240">
+                        <img id="logo" src="./../images/productImg/wine_1.png"/> 
+                    </p:column>
+                    <p:column headerText="Product Description" >
+                        <h:outputText value="#{product.description}" />
+                    </p:column>
+                    <p:column headerText="Price" width="80" sortBy="#{product.description}" >
+                        <h:outputText value="#{product.price}" />
+                    </p:column> 
+                </p:dataTable>
 
-        </ui:define>       
+            </h:form>
+        </ui:define>
     </ui:composition>
 </html>
