@@ -50,6 +50,8 @@ public class displayProductManagBean {
 
     @PostConstruct
     public void init() {
+        //this.dataBaseInit();
+         allProducts = this.viewAllProducts();
         categories = new ArrayList();
         categories = this.getAllCategories();
         root = new DefaultTreeNode("Root", null);
@@ -93,7 +95,7 @@ public class displayProductManagBean {
     }
 
     public List<Product> getAllProducts() {
-        allProducts = this.viewAllProducts();
+       
         return allProducts;
     }
 
@@ -126,9 +128,14 @@ public class displayProductManagBean {
     }
 
     public void onNodeSelect(NodeSelectEvent event) {
+        System.out.println("**********!!!!!!!!!!!!!___________selected ______________ "+this.selectedNode.toString());
         String categoryName = event.getTreeNode().toString();
         SubCategories searchSub = this.findSubCategoryByName(categoryName);
-        this.setAllProducts(searchSub.getProductCollection());
+        System.out.println("**********!!!!!!!!!!!!!___________selected ______________ "+searchSub.getName()+searchSub.getId());
+        allProducts= searchSub.getProductCollection();
+        if(allProducts.isEmpty()){
+            System.out.println("no product founded");
+        }
     }
 
     public void onNodeUnselect(NodeUnselectEvent event) {
@@ -170,6 +177,13 @@ public class displayProductManagBean {
 
     public void setCategories(List<Categories> categories) {
         this.categories = categories;
+    }
+
+    private void dataBaseInit() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        product.ProductWS port = service.getProductWSPort();
+        port.dataBaseInit();
     }
 
 
