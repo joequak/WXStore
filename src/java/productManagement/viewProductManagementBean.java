@@ -16,7 +16,7 @@ import org.primefaces.event.RateEvent;
 import product.Product;
 import product.Customer;
 import product.ProductWS_Service;
-
+import wx.custAccMngmtWS.CustAccMngmtWS_Service;
 
 /**
  *
@@ -25,7 +25,10 @@ import product.ProductWS_Service;
 @Named(value = "viewProductManagementBean")
 @ViewScoped
 public class viewProductManagementBean {
-    
+
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/WineXpressWebService-war/CustAccMngmtWS.wsdl")
+    private CustAccMngmtWS_Service service_1;
+
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/WineXpressWebService-war/productWS.wsdl")
     private ProductWS_Service service;
 
@@ -44,6 +47,7 @@ public class viewProductManagementBean {
     public void init() {
         selectedProduct = (Product) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedProduct");
         if (this.getLogInCust() != -1) {
+           // onCus = (Customer) this.viewAccInfoMember(this.getLogInCust());
         }
     }
 
@@ -88,14 +92,13 @@ public class viewProductManagementBean {
         this.onCus = onCus;
     }
 
-
     public void makeComment() {
         this.makeComment_1(selectedProduct, myComment, onCus);
 
     }
-    
-    public void makeRate(){
-         this.rateProduct(onCus, selectedProduct, rating);
+
+    public void makeRate() {
+        this.rateProduct(onCus, selectedProduct, rating);
     }
 
     public void oncancel() {
@@ -118,5 +121,18 @@ public class viewProductManagementBean {
         port.makeComment(myProduct, newComment, cus);
     }
 
+    private Customer findCustomerById(long cusId) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        product.ProductWS port = service.getProductWSPort();
+        return port.findCustomerById(cusId);
+    }
+
+    private wx.custAccMngmtWS.Customer viewAccInfoMember(long custID) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
+        return port.viewAccInfoMember(custID);
+    }
 
 }
