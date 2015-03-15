@@ -13,9 +13,9 @@
             <ui:define name="content">
                 <h:form>
                     <p:fieldset legend="Product Information" >
-                        <h:panelGrid columns="2" cellpadding="5">
+                        <h:panelGrid columns="2" cellpadding="5" style="text-align: left">
                             <img id="logo" src="./../images/productImg/wine_1.png"/>
-                            <h:outputText value="#{viewProductManagementBean.selectedProduct.description}"/>
+                            <h:outputText  value="#{viewProductManagementBean.selectedProduct.description}"/>
                         </h:panelGrid>
 
                     </p:fieldset>
@@ -26,8 +26,8 @@
                             <p:rating value="#{viewProductManagementBean.rating}" />               
                         </h:panelGrid>
                         <p:commandButton value="Rate" oncomplete="#{viewProductManagementBean.makeRate()}" style="margin:5px" />
-
                     </c:if>
+
                     <br></br>
                     <h3>Comment</h3>
                     <br></br>

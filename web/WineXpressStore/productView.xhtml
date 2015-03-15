@@ -18,11 +18,11 @@
 
             <h:form id="sidNav">
                 <p:tree style="width:250px; text-align: left"
-                    value="#{displayProductManagBean.root}" var="myNode" 
+                        value="#{displayProductManagBean.root}" var="myNode" 
                         selectionMode="single" selection="#{displayProductManagBean.selectedNode}">
-                    
-                    <p:ajax event="select"  listener="#{displayProductManagBean.onNodeSelect}" />
-                    <p:ajax event="unselect" listener="#{displayProductManagBean.onNodeUnselect}" />
+
+                    <p:ajax event="select"  update=":tableForm:productTable" listener="#{displayProductManagBean.onNodeSelect}" />
+                    <p:ajax event="unselect" update=":tableForm:productTable" listener="#{displayProductManagBean.onNodeUnselect}" />
 
                     <p:treeNode>
                         <h:outputText value="#{myNode}"/>
@@ -31,9 +31,12 @@
             </h:form> 
         </ui:define>
         <ui:define name="right">
-            <h:form>
+            <h:form id="tableForm">
                 <p:dataTable id="productTable" style="width:700px;" 
                              var="product" value="#{displayProductManagBean.allProducts}" 
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15,20"
                              selectionMode="single" selection="#{displayProductManagBean.selectedProduct}" rowKey="#{product.id}"
                              emptyMessage="No products found with given categories" widgetVar="productsTable" >
                     <p:ajax event="rowSelect" listener="#{displayProductManagBean.onRowSelect}" />
