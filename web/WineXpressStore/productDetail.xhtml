@@ -33,7 +33,7 @@
                     <br></br>
                     <p:dataTable var="comment" value="#{viewProductManagementBean.selectedProduct.commentCollection}" scrollable="true" scrollHeight="200">
                         <p:column headerText="CUstomer" width="100">
-                            <h:outputText value="#{comment.customer.lastName}" />
+                            <h:outputText value="#{comment.id}" />
                         </p:column>
                         <p:column headerText="Comment" >
                             <h:outputText value="#{comment.comment}" />
@@ -44,7 +44,7 @@
                         <h3>Add Your Comment</h3>
                         <p:inputTextarea id="display" rows="15" cols="100" completeMethod="#{viewProductManagementBean.myComment}" minQueryLength="4" />
                         <br></br>
-                        <p:commandButton actionListener="#{viewProductManagementBean.makeComment}"  update="display" value="Submit">
+                        <p:commandButton actionListener="#{viewProductManagementBean.makeComment}"  update="display comment" value="Submit">
                         </p:commandButton> 
                     </c:if>
                     <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
