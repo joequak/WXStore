@@ -1,92 +1,33 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://product/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://product/">
 
-<xs:element name="dataBaseInit" type="tns:dataBaseInit"/>
+<xs:element name="addNewSubcategory" type="tns:addNewSubcategory"/>
 
-<xs:element name="deleteComment" type="tns:deleteComment"/>
+<xs:element name="addNewSubcategoryResponse" type="tns:addNewSubcategoryResponse"/>
 
-<xs:element name="deleteProduct" type="tns:deleteProduct"/>
+<xs:element name="deleteSubCategory" type="tns:deleteSubCategory"/>
 
-<xs:element name="deleteProductResponse" type="tns:deleteProductResponse"/>
+<xs:element name="deleteSubCategoryResponse" type="tns:deleteSubCategoryResponse"/>
 
-<xs:element name="editProduct" type="tns:editProduct"/>
-
-<xs:element name="findCustomerById" type="tns:findCustomerById"/>
-
-<xs:element name="findCustomerByIdResponse" type="tns:findCustomerByIdResponse"/>
-
-<xs:element name="findSubCategoryByName" type="tns:findSubCategoryByName"/>
-
-<xs:element name="findSubCategoryByNameResponse" type="tns:findSubCategoryByNameResponse"/>
-
-<xs:element name="getAllCategories" type="tns:getAllCategories"/>
-
-<xs:element name="getAllCategoriesResponse" type="tns:getAllCategoriesResponse"/>
-
-<xs:element name="makeComment" type="tns:makeComment"/>
-
-<xs:element name="rateProduct" type="tns:rateProduct"/>
-
-<xs:element name="saveNewProduct" type="tns:saveNewProduct"/>
-
-<xs:element name="saveNewProductResponse" type="tns:saveNewProductResponse"/>
-
-<xs:element name="searchProduct" type="tns:searchProduct"/>
-
-<xs:element name="searchProductResponse" type="tns:searchProductResponse"/>
-
-<xs:element name="viewAllProducts" type="tns:viewAllProducts"/>
-
-<xs:element name="viewAllProductsResponse" type="tns:viewAllProductsResponse"/>
-
-<xs:complexType name="deleteComment">
+<xs:complexType name="addNewSubcategory">
 <xs:sequence>
-<xs:element name="myComment" type="tns:comment" minOccurs="0"/>
+<xs:element name="category" type="tns:categories" minOccurs="0"/>
+<xs:element name="subName" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="comment">
+<xs:complexType name="categories">
 <xs:sequence>
-<xs:element name="adminUsr" type="tns:adminUsr" minOccurs="0"/>
-<xs:element name="comment" type="xs:string" minOccurs="0"/>
 <xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="status" type="xs:boolean"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="subCategoriesCollection" type="tns:subCategories" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="adminUsr">
+<xs:complexType name="subCategories">
 <xs:sequence>
-<xs:element name="commentCollection" type="tns:comment" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="email" type="xs:string" minOccurs="0"/>
-<xs:element name="firstName" type="xs:string" minOccurs="0"/>
 <xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="lastName" type="xs:string" minOccurs="0"/>
-<xs:element name="password" type="xs:string" minOccurs="0"/>
-<xs:element name="status" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="saveNewProduct">
-<xs:sequence>
-<xs:element name="picture" type="xs:string" minOccurs="0"/>
-<xs:element name="productName" type="xs:string" minOccurs="0"/>
-<xs:element name="productPrice" type="xs:double"/>
-<xs:element name="productCost" type="xs:double"/>
-<xs:element name="productDescription" type="xs:string" minOccurs="0"/>
-<xs:element name="productAQ" type="xs:int"/>
-<xs:element name="productDiscount" type="xs:int"/>
-<xs:element name="productVolume" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="saveNewProductResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="editProduct">
-<xs:sequence>
-<xs:element name="newProduct" type="tns:product" minOccurs="0"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="productCollection" type="tns:product" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -108,6 +49,27 @@
 <xs:element name="soldQuantity" type="xs:int"/>
 <xs:element name="status" type="xs:int"/>
 <xs:element name="volumn" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="comment">
+<xs:sequence>
+<xs:element name="adminUsr" type="tns:adminUsr" minOccurs="0"/>
+<xs:element name="comment" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="status" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="adminUsr">
+<xs:sequence>
+<xs:element name="commentCollection" type="tns:comment" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="firstName" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="lastName" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="status" type="xs:boolean"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -233,107 +195,21 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="findSubCategoryByName">
+<xs:complexType name="addNewSubcategoryResponse">
 <xs:sequence>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="return" type="xs:boolean"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="findSubCategoryByNameResponse">
+<xs:complexType name="deleteSubCategory">
 <xs:sequence>
-<xs:element name="return" type="tns:subCategories" minOccurs="0"/>
+<xs:element name="mySub" type="tns:subCategories" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="subCategories">
+<xs:complexType name="deleteSubCategoryResponse">
 <xs:sequence>
-<xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
-<xs:element name="productCollection" type="tns:product" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="searchProduct">
-<xs:sequence>
-<xs:element name="productName" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="searchProductResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:product" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="deleteProduct">
-<xs:sequence>
-<xs:element name="productId" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="deleteProductResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:product" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="makeComment">
-<xs:sequence>
-<xs:element name="myProduct" type="tns:product" minOccurs="0"/>
-<xs:element name="newComment" type="xs:string" minOccurs="0"/>
-<xs:element name="cus" type="tns:customer" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="rateProduct">
-<xs:sequence>
-<xs:element name="cus" type="tns:customer" minOccurs="0"/>
-<xs:element name="myProduct" type="tns:product" minOccurs="0"/>
-<xs:element name="myRate" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="findCustomerById">
-<xs:sequence>
-<xs:element name="cusId" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="findCustomerByIdResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:customer" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="viewAllProducts">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="viewAllProductsResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:product" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="dataBaseInit">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="getAllCategories">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="getAllCategoriesResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:categories" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="categories">
-<xs:sequence>
-<xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
-<xs:element name="subCategoriesCollection" type="tns:subCategories" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="xs:boolean"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

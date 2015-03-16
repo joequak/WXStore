@@ -4,17 +4,8 @@
 <xsd:import namespace="http://product/" schemaLocation="http://localhost:8080/WineXpressWebService-war/productWS?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="viewAllProducts">
-<part name="parameters" element="tns:viewAllProducts"/>
-</message>
-<message name="viewAllProductsResponse">
-<part name="parameters" element="tns:viewAllProductsResponse"/>
-</message>
-<message name="searchProduct">
-<part name="parameters" element="tns:searchProduct"/>
-</message>
-<message name="searchProductResponse">
-<part name="parameters" element="tns:searchProductResponse"/>
+<message name="dataBaseInit">
+<part name="parameters" element="tns:dataBaseInit"/>
 </message>
 <message name="saveNewProduct">
 <part name="parameters" element="tns:saveNewProduct"/>
@@ -22,8 +13,17 @@
 <message name="saveNewProductResponse">
 <part name="parameters" element="tns:saveNewProductResponse"/>
 </message>
-<message name="editProduct">
-<part name="parameters" element="tns:editProduct"/>
+<message name="searchProduct">
+<part name="parameters" element="tns:searchProduct"/>
+</message>
+<message name="searchProductResponse">
+<part name="parameters" element="tns:searchProductResponse"/>
+</message>
+<message name="viewAllProducts">
+<part name="parameters" element="tns:viewAllProducts"/>
+</message>
+<message name="viewAllProductsResponse">
+<part name="parameters" element="tns:viewAllProductsResponse"/>
 </message>
 <message name="deleteProduct">
 <part name="parameters" element="tns:deleteProduct"/>
@@ -31,40 +31,90 @@
 <message name="deleteProductResponse">
 <part name="parameters" element="tns:deleteProductResponse"/>
 </message>
+<message name="editProduct">
+<part name="parameters" element="tns:editProduct"/>
+</message>
 <message name="getAllCategories">
 <part name="parameters" element="tns:getAllCategories"/>
 </message>
 <message name="getAllCategoriesResponse">
 <part name="parameters" element="tns:getAllCategoriesResponse"/>
 </message>
+<message name="findSubCategoryByName">
+<part name="parameters" element="tns:findSubCategoryByName"/>
+</message>
+<message name="findSubCategoryByNameResponse">
+<part name="parameters" element="tns:findSubCategoryByNameResponse"/>
+</message>
+<message name="rateProduct">
+<part name="parameters" element="tns:rateProduct"/>
+</message>
+<message name="makeComment">
+<part name="parameters" element="tns:makeComment"/>
+</message>
+<message name="deleteComment">
+<part name="parameters" element="tns:deleteComment"/>
+</message>
+<message name="findCustomerById">
+<part name="parameters" element="tns:findCustomerById"/>
+</message>
+<message name="findCustomerByIdResponse">
+<part name="parameters" element="tns:findCustomerByIdResponse"/>
+</message>
 <portType name="productWS">
-<operation name="viewAllProducts">
-<input wsam:Action="http://product/productWS/viewAllProductsRequest" message="tns:viewAllProducts"/>
-<output wsam:Action="http://product/productWS/viewAllProductsResponse" message="tns:viewAllProductsResponse"/>
-</operation>
-<operation name="searchProduct">
-<input wsam:Action="http://product/productWS/searchProductRequest" message="tns:searchProduct"/>
-<output wsam:Action="http://product/productWS/searchProductResponse" message="tns:searchProductResponse"/>
+<operation name="dataBaseInit">
+<input wsam:Action="http://product/productWS/dataBaseInit" message="tns:dataBaseInit"/>
 </operation>
 <operation name="saveNewProduct">
 <input wsam:Action="http://product/productWS/saveNewProductRequest" message="tns:saveNewProduct"/>
 <output wsam:Action="http://product/productWS/saveNewProductResponse" message="tns:saveNewProductResponse"/>
 </operation>
-<operation name="editProduct">
-<input wsam:Action="http://product/productWS/editProduct" message="tns:editProduct"/>
+<operation name="searchProduct">
+<input wsam:Action="http://product/productWS/searchProductRequest" message="tns:searchProduct"/>
+<output wsam:Action="http://product/productWS/searchProductResponse" message="tns:searchProductResponse"/>
+</operation>
+<operation name="viewAllProducts">
+<input wsam:Action="http://product/productWS/viewAllProductsRequest" message="tns:viewAllProducts"/>
+<output wsam:Action="http://product/productWS/viewAllProductsResponse" message="tns:viewAllProductsResponse"/>
 </operation>
 <operation name="deleteProduct">
 <input wsam:Action="http://product/productWS/deleteProductRequest" message="tns:deleteProduct"/>
 <output wsam:Action="http://product/productWS/deleteProductResponse" message="tns:deleteProductResponse"/>
 </operation>
+<operation name="editProduct">
+<input wsam:Action="http://product/productWS/editProduct" message="tns:editProduct"/>
+</operation>
 <operation name="getAllCategories">
 <input wsam:Action="http://product/productWS/getAllCategoriesRequest" message="tns:getAllCategories"/>
 <output wsam:Action="http://product/productWS/getAllCategoriesResponse" message="tns:getAllCategoriesResponse"/>
 </operation>
+<operation name="findSubCategoryByName">
+<input wsam:Action="http://product/productWS/findSubCategoryByNameRequest" message="tns:findSubCategoryByName"/>
+<output wsam:Action="http://product/productWS/findSubCategoryByNameResponse" message="tns:findSubCategoryByNameResponse"/>
+</operation>
+<operation name="rateProduct">
+<input wsam:Action="http://product/productWS/rateProduct" message="tns:rateProduct"/>
+</operation>
+<operation name="makeComment">
+<input wsam:Action="http://product/productWS/makeComment" message="tns:makeComment"/>
+</operation>
+<operation name="deleteComment">
+<input wsam:Action="http://product/productWS/deleteComment" message="tns:deleteComment"/>
+</operation>
+<operation name="findCustomerById">
+<input wsam:Action="http://product/productWS/findCustomerByIdRequest" message="tns:findCustomerById"/>
+<output wsam:Action="http://product/productWS/findCustomerByIdResponse" message="tns:findCustomerByIdResponse"/>
+</operation>
 </portType>
 <binding name="productWSPortBinding" type="tns:productWS">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="viewAllProducts">
+<operation name="dataBaseInit">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="saveNewProduct">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -82,7 +132,16 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="saveNewProduct">
+<operation name="viewAllProducts">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="deleteProduct">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -97,7 +156,7 @@
 <soap:body use="literal"/>
 </input>
 </operation>
-<operation name="deleteProduct">
+<operation name="getAllCategories">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -106,7 +165,34 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="getAllCategories">
+<operation name="findSubCategoryByName">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="rateProduct">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="makeComment">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="deleteComment">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="findCustomerById">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
