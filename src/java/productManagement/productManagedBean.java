@@ -8,8 +8,10 @@ package productManagement;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -18,9 +20,11 @@ import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.xml.ws.WebServiceRef;
 import org.primefaces.event.RowEditEvent;
+import product.CategoryWS_Service;
 import product.Product;
 import product.ProductWS_Service;
 import product.SubCategories;
+
 
 
 
@@ -31,13 +35,16 @@ import product.SubCategories;
 @ManagedBean(name = "productManagedBean")
 @ViewScoped
 public class productManagedBean implements Serializable {
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/WineXpressWebService-war/categoryWS.wsdl")
+    private CategoryWS_Service service_1;
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/WineXpressWebService-war/productWS.wsdl")
     private ProductWS_Service service;
-
+    
   
   
 
     private Long productId;
+    private String productIdString;
     private String productName;
     private String productPrice;
     private String productCost;
@@ -46,8 +53,12 @@ public class productManagedBean implements Serializable {
     private String productPicture;
     private String productDiscount;
     private String productVolume;
-    private String productCountry;
+    private String productCategory;
     private String productSubCategory;
+ 
+    private List<String> categoryNameList = new ArrayList<>();
+    
+    private List<String> subCategoryNameList;
     private String statusMessage;
     private List<Product> productList;
     private List<Product> nonFilteredProducts;
@@ -55,7 +66,10 @@ public class productManagedBean implements Serializable {
     private List<String> categories;
     private String picture;
     private List<String> subCategoryChange = new ArrayList<>();
-    
+   
+   
+  
+  
 
     /**
      * Creates a new instance of productManagedBean
@@ -73,6 +87,14 @@ public class productManagedBean implements Serializable {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public String getProductIdString() {
+        return productIdString;
+    }
+
+    public void setProductIdString(String productIdString) {
+        this.productIdString = productIdString;
     }
 
     public String getProductName() {
@@ -139,14 +161,16 @@ public class productManagedBean implements Serializable {
         this.productVolume = productVolume;
     }
 
-    public String getProductCountry() {
-        return productCountry;
+    public String getProductCategory() {
+        return productCategory;
     }
 
-    public void setProductCountry(String productCountry) {
-        this.productCountry = productCountry;
+    public void setProductCategory(String productCategory) {
+        this.productCategory = productCategory;
     }
 
+   
+    
     public String getStatusMessage() {
         return statusMessage;
     }
@@ -201,15 +225,39 @@ public class productManagedBean implements Serializable {
         this.subCategoryChange = subCategoryChange;
     }
 
+    public List<String> getCategoryNameList() {
+     return this.getCategoriesName();
+    }
+
+    public void setCategoryNameList(List<String> CategoryNameList) {
+        this.categoryNameList = CategoryNameList;
+    }
+
+    public List<String> getSubCategoryNameList() {
+        
+        return subCategoryNameList;
+    }
+
+    public void setSubCategoryNameList(List<String> subCategoryNameList) {
+        this.subCategoryNameList = subCategoryNameList;
+    }
+
+ 
+    
+    
+    
+
     //Methods
     //save new product
     public void saveNewProduct(ActionEvent event) {
+        System.out.println(productSubCategory);
+        
         try {
-            productId =this.saveNewProduct_1(picture, productName, Double.valueOf(productPrice), Double.valueOf(productCost), productDescription, Integer.valueOf(productAQ), Integer.valueOf(productDiscount), productVolume);
-           
+            productId =this.saveNewProduct_1(picture, productName, Double.valueOf(productPrice), Double.valueOf(productCost), productDescription, Integer.valueOf(productAQ), Integer.valueOf(productDiscount), productVolume,productSubCategory);
+            
             if (productId != -2l) {
                 statusMessage = "Product saved successfully";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "ADD NEW PRODUCT RESULT: " + statusMessage + "(new product id is " + productId + ")", ""));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "ADD NEW PRODUCT RESULT: " + statusMessage , ""));
 
             } else {
                 statusMessage = "Product saved failed. product name already exists";
@@ -260,6 +308,22 @@ public class productManagedBean implements Serializable {
             ex.printStackTrace();
         }
     }
+    public void delete(ActionEvent event) {
+      
+        System.out.println(" ProductId:"+productIdString);
+        try {
+            Product product = deleteProduct_1(Long.valueOf(productIdString));
+            if(product == null){
+                statusMessage="Deleted failed, ProductId does not exist";}
+            else{
+            statusMessage = " Deleted successfully";}
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, statusMessage, ""));
+            productList.remove(product);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+   
 
     //Edit the product
 
@@ -290,7 +354,23 @@ public class productManagedBean implements Serializable {
          
         return ((Comparable) value).compareTo(Double.valueOf(filterText)) > 0;
     }
-
+    
+    public void productSubCategoryListChoose(){
+        
+        subCategoryNameList = this.getSubCategoryNameList(productCategory);
+    
+    }
+    
+     public List<String> productSubCategoryListChoose2(String query){
+        List<String> a  = new ArrayList<String>();
+        subCategoryNameList = this.getSubCategoryNameList(productCategory);
+        for(int i = 0;i<subCategoryNameList.size(); i++){
+            String b = String.valueOf(subCategoryNameList);
+            a.add(b);
+        }
+        return a;
+    
+    }
     private void deleteComment(product.Comment myComment) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
@@ -340,12 +420,7 @@ public class productManagedBean implements Serializable {
         port.rateProduct(cus, myProduct, myRate);
     }
 
-    private long saveNewProduct_1(java.lang.String picture, java.lang.String productName, double productPrice, double productCost, java.lang.String productDescription, int productAQ, int productDiscount, java.lang.String productVolume) {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        product.ProductWS port = service.getProductWSPort();
-        return port.saveNewProduct(picture, productName, productPrice, productCost, productDescription, productAQ, productDiscount, productVolume);
-    }
+ 
 
     private java.util.List<product.Product> searchProduct_1(java.lang.String productName) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
@@ -360,10 +435,29 @@ public class productManagedBean implements Serializable {
         product.ProductWS port = service.getProductWSPort();
         return port.viewAllProducts();
     }
-    
 
+    private java.util.List<java.lang.String> getCategoriesName() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        product.CategoryWS port = service_1.getCategoryWSPort();
+        return port.getCategoriesName();
+    }
 
-    
+    private java.util.List<java.lang.String> getSubCategoryNameList(java.lang.String categoryName) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        product.CategoryWS port = service_1.getCategoryWSPort();
+        return port.getSubCategoryNameList(categoryName);
+    }
+
+    private long saveNewProduct_1(java.lang.String picture, java.lang.String productName, double productPrice, double productCost, java.lang.String productDescription, int productAQ, int productDiscount, java.lang.String productVolume, java.lang.String subCateogryName) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        product.ProductWS port = service.getProductWSPort();
+        return port.saveNewProduct(picture, productName, productPrice, productCost, productDescription, productAQ, productDiscount, productVolume, subCateogryName);
+    }
+
+   
 
     
 
