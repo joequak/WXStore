@@ -4,21 +4,40 @@
 <xsd:import namespace="http://product/" schemaLocation="http://localhost:8080/WineXpressWebService-war/subCategoryWS?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="saveSubCategories">
-<part name="parameters" element="tns:saveSubCategories"/>
+<message name="deleteSubCategory">
+<part name="parameters" element="tns:deleteSubCategory"/>
 </message>
-<message name="saveSubCategoriesResponse">
-<part name="parameters" element="tns:saveSubCategoriesResponse"/>
+<message name="deleteSubCategoryResponse">
+<part name="parameters" element="tns:deleteSubCategoryResponse"/>
+</message>
+<message name="addNewSubcategory">
+<part name="parameters" element="tns:addNewSubcategory"/>
+</message>
+<message name="addNewSubcategoryResponse">
+<part name="parameters" element="tns:addNewSubcategoryResponse"/>
 </message>
 <portType name="subCategoryWS">
-<operation name="saveSubCategories">
-<input wsam:Action="http://product/subCategoryWS/saveSubCategoriesRequest" message="tns:saveSubCategories"/>
-<output wsam:Action="http://product/subCategoryWS/saveSubCategoriesResponse" message="tns:saveSubCategoriesResponse"/>
+<operation name="deleteSubCategory">
+<input wsam:Action="http://product/subCategoryWS/deleteSubCategoryRequest" message="tns:deleteSubCategory"/>
+<output wsam:Action="http://product/subCategoryWS/deleteSubCategoryResponse" message="tns:deleteSubCategoryResponse"/>
+</operation>
+<operation name="addNewSubcategory">
+<input wsam:Action="http://product/subCategoryWS/addNewSubcategoryRequest" message="tns:addNewSubcategory"/>
+<output wsam:Action="http://product/subCategoryWS/addNewSubcategoryResponse" message="tns:addNewSubcategoryResponse"/>
 </operation>
 </portType>
 <binding name="subCategoryWSPortBinding" type="tns:subCategoryWS">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="saveSubCategories">
+<operation name="deleteSubCategory">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="addNewSubcategory">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

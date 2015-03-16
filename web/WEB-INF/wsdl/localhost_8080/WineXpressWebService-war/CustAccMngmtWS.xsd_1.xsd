@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://accountManagement.wx.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://accountManagement.wx.com/">
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://accountManagement.wx.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://accountManagement.wx.com/">
 
 <xs:element name="activateAccount" type="tns:activateAccount"/>
 
@@ -36,8 +36,9 @@
 
 <xs:element name="viewPurchaseHistoryMemberResponse" type="tns:viewPurchaseHistoryMemberResponse"/>
 
-<xs:complexType name="registerAsMember">
+<xs:complexType name="editParticularsMember">
 <xs:sequence>
+<xs:element name="custID" type="xs:long"/>
 <xs:element name="newCust" type="tns:customer" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
@@ -77,9 +78,8 @@
 <xs:sequence>
 <xs:element name="adminUsr" type="tns:adminUsr" minOccurs="0"/>
 <xs:element name="comment" type="xs:string" minOccurs="0"/>
-<xs:element name="customer" type="tns:customer" minOccurs="0"/>
 <xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="product" type="tns:product" minOccurs="0"/>
+<xs:element name="status" type="xs:boolean"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -95,34 +95,14 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="product">
+<xs:complexType name="creditCard">
 <xs:sequence>
-<xs:element name="availableQuantity" type="xs:int"/>
-<xs:element name="averageRate" type="xs:double"/>
-<xs:element name="commentCollection" type="tns:comment" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="cost" type="xs:double"/>
-<xs:element name="description" type="xs:string" minOccurs="0"/>
-<xs:element name="discount" type="xs:int"/>
+<xs:element name="cardHolder" type="xs:string" minOccurs="0"/>
+<xs:element name="cardNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="customerCollection" type="tns:customer" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="expDate" type="xs:string" minOccurs="0"/>
 <xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
-<xs:element name="numberOfRate" type="xs:int"/>
-<xs:element name="orderItemCollection" type="tns:orderItem" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="picture" type="xs:string" minOccurs="0"/>
-<xs:element name="price" type="xs:double"/>
-<xs:element name="rateCollection" type="tns:rate" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="soldQuantity" type="xs:int"/>
-<xs:element name="subCategoriesCollection" type="tns:subCategories" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="volumn" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="orderItem">
-<xs:sequence>
-<xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="orderDetail" type="tns:orderDetail" minOccurs="0"/>
-<xs:element name="product" type="tns:product" minOccurs="0"/>
-<xs:element name="quantity" type="xs:int"/>
-<xs:element name="subtotal" type="xs:double"/>
+<xs:element name="type" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -164,6 +144,43 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="orderItem">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="orderDetail" type="tns:orderDetail" minOccurs="0"/>
+<xs:element name="product" type="tns:product" minOccurs="0"/>
+<xs:element name="quantity" type="xs:int"/>
+<xs:element name="subtotal" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="product">
+<xs:sequence>
+<xs:element name="availableQuantity" type="xs:int"/>
+<xs:element name="averageRate" type="xs:double"/>
+<xs:element name="commentCollection" type="tns:comment" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="cost" type="xs:double"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="discount" type="xs:int"/>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="numberOfRate" type="xs:int"/>
+<xs:element name="orderItemCollection" type="tns:orderItem" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="picture" type="xs:string" minOccurs="0"/>
+<xs:element name="price" type="xs:double"/>
+<xs:element name="rateCollection" type="tns:rate" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="soldQuantity" type="xs:int"/>
+<xs:element name="status" type="xs:int"/>
+<xs:element name="volumn" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rate">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="payment">
 <xs:sequence>
 <xs:element name="amount" type="xs:double"/>
@@ -173,43 +190,6 @@
 <xs:element name="method" type="xs:string" minOccurs="0"/>
 <xs:element name="orderDetail" type="tns:orderDetail" minOccurs="0"/>
 <xs:element name="payDay" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="rate">
-<xs:sequence>
-<xs:element name="customer" type="tns:customer" minOccurs="0"/>
-<xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="product" type="tns:product" minOccurs="0"/>
-<xs:element name="rate" type="xs:double"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="subCategories">
-<xs:sequence>
-<xs:element name="categories" type="tns:categories" minOccurs="0"/>
-<xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
-<xs:element name="productCollection" type="tns:product" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="categories">
-<xs:sequence>
-<xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
-<xs:element name="subCategoriesCollection" type="tns:subCategories" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="creditCard">
-<xs:sequence>
-<xs:element name="cardHolder" type="xs:string" minOccurs="0"/>
-<xs:element name="cardNumber" type="xs:string" minOccurs="0"/>
-<xs:element name="customerCollection" type="tns:customer" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="expDate" type="xs:string" minOccurs="0"/>
-<xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="type" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -227,45 +207,9 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="registerAsMemberResponse">
+<xs:complexType name="editParticularsMemberResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="logOutMember">
-<xs:sequence>
-<xs:element name="custID" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="logOutMemberResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="activateAccount">
-<xs:sequence>
-<xs:element name="emailAdd" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="activateAccountResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="viewAccInfoMember">
-<xs:sequence>
-<xs:element name="custID" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="viewAccInfoMemberResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:customer" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -283,31 +227,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="editParticularsMember">
-<xs:sequence>
-<xs:element name="custID" type="xs:long"/>
-<xs:element name="newCust" type="tns:customer" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="editParticularsMemberResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="viewPurchaseHistoryMember">
-<xs:sequence>
-<xs:element name="custID" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="viewPurchaseHistoryMemberResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:orderDetail" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="logInMember">
 <xs:sequence>
 <xs:element name="emailAdd" type="xs:string" minOccurs="0"/>
@@ -321,6 +240,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="logOutMember">
+<xs:sequence>
+<xs:element name="custID" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="logOutMemberResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="resetPwMember">
 <xs:sequence>
 <xs:element name="emailAdd" type="xs:string" minOccurs="0"/>
@@ -331,6 +262,54 @@
 <xs:complexType name="resetPwMemberResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="activateAccount">
+<xs:sequence>
+<xs:element name="emailAdd" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="activateAccountResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="registerAsMember">
+<xs:sequence>
+<xs:element name="newCust" type="tns:customer" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="registerAsMemberResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="viewAccInfoMember">
+<xs:sequence>
+<xs:element name="custID" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="viewAccInfoMemberResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:customer" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="viewPurchaseHistoryMember">
+<xs:sequence>
+<xs:element name="custID" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="viewPurchaseHistoryMemberResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:orderDetail" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

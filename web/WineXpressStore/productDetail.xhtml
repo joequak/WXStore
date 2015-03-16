@@ -14,7 +14,7 @@
                 <h:form>
                     <p:fieldset legend="Product Information" >
                         <h:panelGrid columns="2" cellpadding="5" style="text-align: left">
-                            <img id="logo" src="./../images/productImg/wine_1.png"/>
+                            <img id="logo" src="#{viewProductManagementBean.selectedProduct.picture}"/>
                             <h:outputText  value="#{viewProductManagementBean.selectedProduct.description}"/>
                         </h:panelGrid>
 

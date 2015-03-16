@@ -4,7 +4,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition template="./../templates/StoreTemplate.xhtml">
         <ui:param name="pageName" value="Admin Management" />
@@ -40,15 +40,17 @@
                              selectionMode="single" selection="#{displayProductManagBean.selectedProduct}" rowKey="#{product.id}"
                              emptyMessage="No products found with given categories" widgetVar="productsTable" >
                     <p:ajax event="rowSelect" listener="#{displayProductManagBean.onRowSelect}" />
-                    <p:column headerText="" width="240">
-                        <img id="logo" src="./../images/productImg/wine2.png"/> 
-                    </p:column>
-                    <p:column headerText="Product Description" >
-                        <h:outputText value="#{product.description}" />
-                    </p:column>
-                    <p:column headerText="Price" width="80" sortBy="#{product.description}" >
-                        <h:outputText value="#{product.price}" />
-                    </p:column> 
+                    <c:if test="#{product.status==1}">
+                        <p:column headerText="" width="240">
+                            <img id="logo" src="#{product.picture}"/> 
+                        </p:column>
+                        <p:column headerText="Product Description" >
+                            <h:outputText value="#{product.description}" />
+                        </p:column>
+                        <p:column headerText="Price" width="80" sortBy="#{product.description}" >
+                            <h:outputText value="#{product.price}" />
+                        </p:column> 
+                    </c:if>
                 </p:dataTable>
 
             </h:form>

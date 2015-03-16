@@ -1,17 +1,52 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://product/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://product/">
 
-<xs:element name="addNewSubcategory" type="tns:addNewSubcategory"/>
+<xs:element name="deleteCategories" type="tns:deleteCategories"/>
 
-<xs:element name="addNewSubcategoryResponse" type="tns:addNewSubcategoryResponse"/>
+<xs:element name="deleteCategoriesResponse" type="tns:deleteCategoriesResponse"/>
 
-<xs:element name="deleteSubCategory" type="tns:deleteSubCategory"/>
+<xs:element name="editCategories" type="tns:editCategories"/>
 
-<xs:element name="deleteSubCategoryResponse" type="tns:deleteSubCategoryResponse"/>
+<xs:element name="getCategoriesName" type="tns:getCategoriesName"/>
 
-<xs:complexType name="addNewSubcategory">
+<xs:element name="getCategoriesNameResponse" type="tns:getCategoriesNameResponse"/>
+
+<xs:element name="getSubCategoryNameList" type="tns:getSubCategoryNameList"/>
+
+<xs:element name="getSubCategoryNameListResponse" type="tns:getSubCategoryNameListResponse"/>
+
+<xs:element name="saveNewCategories" type="tns:saveNewCategories"/>
+
+<xs:element name="saveNewCategoriesResponse" type="tns:saveNewCategoriesResponse"/>
+
+<xs:element name="searchCategories" type="tns:searchCategories"/>
+
+<xs:element name="searchCategoriesResponse" type="tns:searchCategoriesResponse"/>
+
+<xs:element name="viewAllCategories" type="tns:viewAllCategories"/>
+
+<xs:element name="viewAllCategoriesResponse" type="tns:viewAllCategoriesResponse"/>
+
+<xs:complexType name="deleteCategories">
 <xs:sequence>
-<xs:element name="category" type="tns:categories" minOccurs="0"/>
-<xs:element name="subName" type="xs:string" minOccurs="0"/>
+<xs:element name="categoryId" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteCategoriesResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchCategories">
+<xs:sequence>
+<xs:element name="categoriesName" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchCategoriesResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:categories" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -195,21 +230,53 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="addNewSubcategoryResponse">
+<xs:complexType name="saveNewCategories">
 <xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
+<xs:element name="categoriesName" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="deleteSubCategory">
+<xs:complexType name="saveNewCategoriesResponse">
 <xs:sequence>
-<xs:element name="mySub" type="tns:subCategories" minOccurs="0"/>
+<xs:element name="return" type="xs:long"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="deleteSubCategoryResponse">
+<xs:complexType name="getCategoriesName">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getCategoriesNameResponse">
 <xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="viewAllCategories">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="viewAllCategoriesResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:categories" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getSubCategoryNameList">
+<xs:sequence>
+<xs:element name="categoryName" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getSubCategoryNameListResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="editCategories">
+<xs:sequence>
+<xs:element name="newCategories" type="tns:categories" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>
