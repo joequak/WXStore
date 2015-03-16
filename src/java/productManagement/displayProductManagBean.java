@@ -67,33 +67,6 @@ public class displayProductManagBean {
 
     }
 
-    public void temp() {
-        root = new DefaultTreeNode("Root", null);
-        TreeNode n1 = new DefaultTreeNode("Origin", root);
-        TreeNode n2 = new DefaultTreeNode("Type", root);
-        TreeNode n3 = new DefaultTreeNode("Occation", root);
-        n1.getChildren().add(new DefaultTreeNode("France"));
-        n1.getChildren().add(new DefaultTreeNode("Italy"));
-        n1.getChildren().add(new DefaultTreeNode("Australia"));
-        n1.getChildren().add(new DefaultTreeNode("Brazil"));
-        n2.getChildren().add(new DefaultTreeNode("Beer"));
-        n2.getChildren().add(new DefaultTreeNode("Wine"));
-        n2.getChildren().add(new DefaultTreeNode("Champain"));
-        n3.getChildren().add(new DefaultTreeNode("Birthday"));
-        categories = new ArrayList();
-        categories = this.getAllCategories();
-        root = new DefaultTreeNode("Root", null);
-        for (Object o : categories) {
-            Categories myC = (Categories) o;
-            TreeNode fistNode = new DefaultTreeNode(myC.getName(), root);
-            for (Object b : myC.getSubCategoriesCollection()) {
-                SubCategories sub = (SubCategories) b;
-                fistNode.getChildren().add(new DefaultTreeNode(sub.getName()));
-                System.out.println("++++++++++++++++++++++++++++SubCate" + sub.getName());
-            }
-        }
-    }
-
     public List<Product> getAllProducts() {
        
         return allProducts;

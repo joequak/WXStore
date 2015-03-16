@@ -37,6 +37,7 @@ public class viewProductManagementBean {
     private Integer rating;
     private String myComment;
     private Customer onCus;
+    
     @ManagedProperty(value = "#{commonInfraMB.logInCust}")
     private long logInCust;
 
@@ -128,11 +129,6 @@ public class viewProductManagementBean {
         return port.findCustomerById(cusId);
     }
 
-    private wx.custAccMngmtWS.Customer viewAccInfoMember(long custID) {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        wx.custAccMngmtWS.CustAccMngmtWS port = service_1.getCustAccMngmtWSPort();
-        return port.viewAccInfoMember(custID);
-    }
+
 
 }
