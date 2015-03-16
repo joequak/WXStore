@@ -56,6 +56,7 @@ public class CustSupportMB implements Serializable {
         enquiry.setEmailAddress(email);
         enquiry.setSubject(subject);
         enquiry.setContent(content);
+        content="";
 
         if (creatEnquiry(enquiry)) {
             //update table of enquiry
